@@ -1,0 +1,112 @@
+@import url("https://fonts.cdnfonts.com/css/roobert");
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  /* border: 1px solid red; */
+}
+
+.shadow-lg {
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.border1 {
+  border: 1px solid #fff;
+}
+my-form {
+  border: 2px solid yellow;
+  /* min-width: 350px; */
+}
+body,
+html {
+  background-color: #17181c;
+}
+.disappointed {
+  color: red;
+}
+.my-bg {
+  background-color: #17181c !important;
+}
+.form-bg {
+  background-color: #23252b !important;
+}
+.my-bg-lighter {
+  background-color: #17181c !important;
+  /* background-color: #23252b; */
+  /* background-color: #363842; */
+}
+.my-bg-but-lighter {
+  background-color: #23252b !important;
+}
+.MuiMenu-paper {
+  background-color: black !important;
+  /* font-size: 64px; */
+  color: aliceblue !important;
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  line-height: 1 !important;
+}
+.MuiPaper-root {
+  top: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+}
+.my-font {
+  font-family: "Roobert,sans-serif";
+  background: #6717cf;
+  background: linear-gradient(to right, #6717cf 0%, #c315cf 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.MuiMenuItem-root {
+  font-size: 42px;
+  line-height: 1;
+  font-family: "Roobert,sans-serif";
+}
+.width-class {
+  min-width: 240px;
+}
+select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid white;
+  border-radius: 4px;
+
+  background-color: #23252b;
+  color: #fff;
+}
+.my-select:focus {
+  border: 1px solid white;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #23252b;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #edf2f7;
+  border-radius: 4px;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  scrollbar-width: thin;
+}
