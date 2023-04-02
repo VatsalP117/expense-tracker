@@ -117,7 +117,7 @@ export default function Dashboard(props) {
     console.log("filter done");
     console.log(filteredTransactions);
     const categoryData = filteredData.reduce((acc, transaction) => {
-      if (transaction.type != "Income") {
+      if (transaction.type === "Expense") {
         if (acc[transaction.category]) {
           acc[transaction.category] += transaction.amount;
         } else {

@@ -18,15 +18,9 @@ model Transaction{
   remarks String?
   date DateTime @default(now())
 }
-model defCategories{
+model catgoryBudgets{
   id String @id @default(cuid())
   category String
-  budget String
-
-}
-model userCategories{
-  id String @id @default(cuid())
-  category String
-  budget String
-  userEmail String
+  type String
+  budget Int @default(1000)
 }
