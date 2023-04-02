@@ -21,11 +21,13 @@ import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
 export default function Dashboard(props) {
   const user = props.user;
   console.log(user);
-  const categoryBudgets = [
-    { name: "Groceries", budget: 500, spent: 350 },
-    { name: "Entertainment", budget: 200, spent: 150 },
-    { name: "Transportation", budget: 100, spent: 80 },
-  ];
+  console.log(props.categoryBudgets);
+  // const categoryBudgets = [
+  //   { name: "Groceries", budget: 500, spent: 350 },
+  //   { name: "Entertainment", budget: 200, spent: 150 },
+  //   { name: "Transportation", budget: 100, spent: 80 },
+  // ];
+  const [categoryBudgets, setCategoryBudgets] = useState(props.categoryBudgets);
   const [timeline, setTimeline] = useState("This month");
   const [data, setData] = useState([]);
   const [budgetModal, setBudgetModal] = useState(false);
@@ -264,12 +266,20 @@ export default function Dashboard(props) {
                       <div
                         className="bg-blue-500 h-full"
                         style={{
-                          width: `${(value / 1000) * 100}%`,
+                          width: `${
+                            (value /
+                              categoryBudgets.find(
+                                (item) => item.category === key
+                              ).budget) *
+                            100
+                          }%`,
                         }}
                       ></div>
                     </div>
                   </div>
-                  <span className="text-blue-500">{`$${value} / $${1000}`}</span>
+                  <span className="text-blue-500">{`$${value} / ${
+                    categoryBudgets.find((item) => item.category === key).budget
+                  }`}</span>
                 </li>
               ))}
             </ul>
@@ -302,10 +312,17 @@ export async function getServerSideProps({ req, resolvedUrl }) {
       userEmail: userEmail, //hard-coded, to be changed
     },
   });
+  const categoryBudgets = await prisma.catgoryBudgets.findMany({
+    where: {
+      userEmail: userEmail,
+      type: "Expense",
+    },
+  });
   return {
     props: {
       data: JSON.parse(JSON.stringify(data)),
       user: JSON.parse(JSON.stringify(user)),
+      categoryBudgets,
     },
   };
 }

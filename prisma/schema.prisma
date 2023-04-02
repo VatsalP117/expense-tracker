@@ -23,4 +23,5 @@ model catgoryBudgets{
   category String
   type String
   budget Int @default(1000)
+  userEmail String
 }
