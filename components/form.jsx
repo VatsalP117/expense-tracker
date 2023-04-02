@@ -2,47 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { format } from "date-fns";
 import { useEffect } from "react";
+import categories from "../utils/categories";
 function Form(props) {
-  const categories = {
-    Expense: [
-      "Food",
-      "Transportation",
-      "Rent",
-      "Groceries",
-      "Entertainment",
-      "Travel",
-
-      "Shopping",
-      "Other",
-    ],
-    Income: [
-      "Salary",
-      "Bonus",
-      "Freelance",
-      "Rental Income",
-      "Dividends",
-      "Capital Gains",
-      "Interest Income",
-      "Other",
-    ],
-    Investment: [
-      "Stocks",
-      "Mutual Funds",
-      "Real Estate",
-      "Cryptocurrency",
-      "Bonds",
-      "Retirement Accounts",
-      "Other",
-    ],
-    EMI: [
-      "Home Loan",
-      "Car Loan",
-      "Personal Loan",
-      "Student Loan",
-      "Credit Card Payment",
-      "Other",
-    ],
-  };
   const [type, setType] = useState("Expense");
   const [category, setCategory] = useState(categories[type][0]);
   const [formData, setFormData] = useState({
