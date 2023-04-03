@@ -76,9 +76,9 @@ export default function Home() {
           effortlessly.
         </h2>
         <Link
-          className=" bg-blue-500 rounded-xl text-white font-medium px-4 py-3 mt-8 mb-6 md:mt-5 md:mb-4 hover:bg-blue-500 transition"
+          className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-full shadow-lg mt-4 md:mt-6 md:text-lg"
           href="/dashboard"
-          prefetch={false}
+          // prefetch={false}
         >
           Get Started
         </Link>

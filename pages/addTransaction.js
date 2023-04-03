@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
+import BackButton from "../components/dashboard-button";
 import { ClerkProvider, useUser, SignIn, SignedOut } from "@clerk/nextjs";
 export default function AddTransaction() {
   // const categories = [
@@ -59,15 +59,16 @@ export default function AddTransaction() {
   return (
     <div className=" max-w-5xl mx-auto flex flex-col py-12 px-6 md:gap-6 gap-3">
       <div className="mb-8">
-        <Link
+        {/* <Link
           className="bg-indigo-600 shadow-xl hover:bg-indigo-500 text-white font-bold rounded-full p-4 w-48"
           href="/dashboard"
         >
           ⬅️ Dashboard
-        </Link>
+        </Link> */}
+        <BackButton />
       </div>
       <div className="flex flex-col gap-2">
-        <h1 className="text-white text-5xl md:text-7xl font-bold sm:text-center md:text-left">
+        <h1 className="text-white text-5xl md:text-7xl font-bold sm:text-center lg:text-left">
           Add Transaction
         </h1>
       </div>

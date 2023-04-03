@@ -164,7 +164,8 @@ function ResponsiveAppBar(props) {
               </MenuItem>
               <MenuItem>
                 {/* <p>Change Timeline</p> */}
-                <button onClick={handleModalOpen}>Set Budget</button>
+                {/* <button onClick={handleModalOpen}>Set Budget</button> */}
+                <Link href="/category-budgets">Set Budget</Link>
               </MenuItem>
               <MenuItem>
                 <Link href="/hey">Analytics</Link>
@@ -181,7 +182,8 @@ function ResponsiveAppBar(props) {
             </Link>
             <Link href="/addTransaction">Add Transaction</Link>
             {/* <p>Change Timeline</p> */}
-            <button onClick={handleModalOpen}>Set Budget</button>
+            {/* <button onClick={handleModalOpen}>Set Budget</button> */}
+            <Link href="/category-budgets">Set Budget</Link>
             <Link href="/hey">Analytics</Link>
           </Box>
 
