@@ -14,6 +14,7 @@ import {
 import prisma from "../utils/prismaClient";
 import { ClerkProvider, useUser, SignIn, SignedOut } from "@clerk/nextjs";
 import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
+import BackButton from "../components/dashboard-button";
 export default function SetBudget({ categoryBudgets }) {
   // const categories = [
   //   "Food",
@@ -41,32 +42,11 @@ export default function SetBudget({ categoryBudgets }) {
       };
     });
   }
-  // async function handleSubmit(e) {
-  //   e.preventDefault();
 
-  //   setCategoryOpen(false);
-  //   setNewCat({});
-  //   const response1 = fetch("/api/postCat", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(newCat),
-  //   });
-
-  //   setNewCat({
-  //     cateory: "",
-  //     budget: "1000",
-  //     userEmail: "vatsal4011@gmail.com",
-  //   });
-  // }
   return (
     <div className=" max-w-5xl mx-auto flex flex-col py-12 px-6 md:gap-6 gap-3">
       <div className="mb-8">
-        <Link
-          className="bg-indigo-600 shadow-xl hover:bg-indigo-500 text-white font-bold rounded-full p-4 w-48"
-          href="/dashboard"
-        >
-          ⬅️ Dashboard
-        </Link>
+        <BackButton />
       </div>
       <div className="flex flex-col gap-8">
         <h1 className="text-white text-5xl md:text-7xl font-bold sm:text-center md:text-left">
@@ -107,10 +87,10 @@ export async function getServerSideProps({ req }) {
       userEmail: userEmail,
       type: "Expense",
     },
-    include: {
-      category: true,
-      budget: true,
-    },
+    // include: {
+    //   category: true,
+    //   budget: true,
+    // },
   });
   return {
     props: {

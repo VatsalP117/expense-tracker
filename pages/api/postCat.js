@@ -3,14 +3,23 @@
 import prisma from "../../utils/prismaClient";
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { category, budget, userEmail } = req.body;
-    const newObject = await prisma.userCategories.create({
+    const { category, budget, userEmail, type } = req.body;
+    const deletedObject = await prisma.catgoryBudgets.deleteMany({
+      where: {
+        userEmail: userEmail,
+        category: category,
+        type: type,
+      },
+    });
+    const newObject = await prisma.catgoryBudgets.create({
       data: {
+        type,
         category,
         budget,
         userEmail,
       },
     });
+
     console.log(newObject);
     res.status(200).json(req.body);
   } else {

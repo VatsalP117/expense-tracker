@@ -3,56 +3,14 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { useEffect } from "react";
 import { categories } from "../utils/categories";
-// const categories = {
-//   Expense: [
-//     "Food",
-//     "Transportation",
-//     "Rent",
-//     "Groceries",
-//     "Entertainment",
-//     "Travel",
 
-//     "Shopping",
-//     "Other",
-//   ],
-//   Income: [
-//     "Salary",
-//     "Bonus",
-//     "Freelance",
-//     "Rental Income",
-//     "Dividends",
-//     "Capital Gains",
-//     "Interest Income",
-//     "Other",
-//   ],
-//   Investment: [
-//     "Stocks",
-//     "Mutual Funds",
-//     "Real Estate",
-//     "Cryptocurrency",
-//     "Bonds",
-//     "Retirement Accounts",
-//     "Other",
-//   ],
-//   EMI: [
-//     "Home Loan",
-//     "Car Loan",
-//     "Personal Loan",
-//     "Student Loan",
-//     "Credit Card Payment",
-//     "Other",
-//   ],
-// };
 function Form(props) {
   console.log(categories);
   const [type, setType] = useState("Expense");
   const [category, setCategory] = useState(categories[type][0]);
   const [formData, setFormData] = useState({
     amount: 0,
-    // type: "Expense",
-    // category: categories[type][0],
     date: new Date(),
-
     remarks: "",
     userEmail: props.userEmail,
   });
@@ -61,14 +19,8 @@ function Form(props) {
     return <option value={category}>{category}</option>;
   });
   function handleChange(event) {
-    // console.log(event.target.name, event.target.value);
-    // console.log(formData);
     if (event.target.name === "amount") {
       setFormData((prevFormData) => {
-        // return {
-        //   ...prevFormData,
-        //   [event.target.name]: event.target.value,
-        // };
         return {
           ...prevFormData,
           [event.target.name]: parseInt(event.target.value),
@@ -76,10 +28,6 @@ function Form(props) {
       });
     } else if (event.target.name === "date") {
       setFormData((prevFormData) => {
-        // return {
-        //   ...prevFormData,
-        //   [event.target.name]: event.target.value,
-        // };
         return {
           ...prevFormData,
           [event.target.name]: new Date(event.target.value),

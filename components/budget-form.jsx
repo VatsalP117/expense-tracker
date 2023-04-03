@@ -52,7 +52,21 @@ function BudgetForm(props) {
   });
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(category, newBudget);
+    const formData = {
+      type: type,
+      category: category,
+      budget: newBudget,
+      userEmail: props.userEmail,
+    };
+    console.log(formData);
+    const response1 = fetch("/api/postCat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+    setType("Expense");
+    setCategory(categories[type][0]);
+    setNewBudget(1000);
   }
   return (
     <div className="my-bg min-h-screen flex flex-col items-center justify-start min-w-xl mt-4 md:mt-6 md:items-start">
