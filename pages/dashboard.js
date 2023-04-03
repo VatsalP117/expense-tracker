@@ -18,15 +18,12 @@ import prisma from "../utils/prismaClient";
 import { format } from "date-fns";
 import Image from "next/legacy/image";
 import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
+import { allCategories } from "../utils/categories";
 export default function Dashboard(props) {
   const user = props.user;
-  console.log(user);
-  console.log(props.categoryBudgets);
-  // const categoryBudgets = [
-  //   { name: "Groceries", budget: 500, spent: 350 },
-  //   { name: "Entertainment", budget: 200, spent: 150 },
-  //   { name: "Transportation", budget: 100, spent: 80 },
-  // ];
+  // console.log(user);
+  // console.log(props.categoryBudgets);
+  // console.log(allCategories);
   const [categoryBudgets, setCategoryBudgets] = useState(props.categoryBudgets);
   const [timeline, setTimeline] = useState("This month");
   const [data, setData] = useState([]);
@@ -96,6 +93,7 @@ export default function Dashboard(props) {
     "December 2024",
   ]);
   // console.log(allData);
+  const [finalCategoryBudgets, setFinalCategoryBudgets] = useState([]);
   const date = new Date();
   const dateString = date.toLocaleString("en-US", {
     month: "long",
@@ -151,7 +149,16 @@ export default function Dashboard(props) {
       );
     });
   }
+  const categoryBudgetsFinal = allCategories.map((category) => {
+    const budgetObj = categoryBudgets.find(
+      (budget) =>
+        budget.type === category.type && budget.category === category.category
+    );
+    const budget = budgetObj ? budgetObj.budget : 1000;
+    return { type: category.type, category: category.category, budget: budget };
+  });
 
+  console.log(categoryBudgetsFinal);
   return (
     <div className="dashboard-page flex flex-col items-center gap-5">
       <ResponsiveAppBar setTimeline={setTimeline} user={user} />
@@ -263,23 +270,40 @@ export default function Dashboard(props) {
                   <div className="flex items-center">
                     <span className="text-white mr-4">{key}</span>
                     <div className="bg-gray-700 rounded-full h-4 w-32 overflow-hidden">
-                      <div
-                        className="bg-blue-500 h-full"
-                        style={{
-                          width: `${
-                            (value /
-                              categoryBudgets.find(
-                                (item) => item.category === key
-                              ).budget) *
-                            100
-                          }%`,
-                        }}
-                      ></div>
+                      {categoryBudgetsFinal.length > 0 && (
+                        <div
+                          className="bg-blue-500 h-full"
+                          style={{
+                            width: `${
+                              (value /
+                                categoryBudgetsFinal.find(
+                                  (item) => item.category === key
+                                ).budget) *
+                              100
+                            }%`,
+                          }}
+                        ></div>
+                      )}
+                      {categoryBudgetsFinal.length === 0 && (
+                        <div
+                          className="bg-blue-500 h-full"
+                          style={{
+                            width: `${value / 1000}%`,
+                          }}
+                        ></div>
+                      )}
                     </div>
                   </div>
-                  <span className="text-blue-500">{`$${value} / ${
-                    categoryBudgets.find((item) => item.category === key).budget
+                  {categoryBudgetsFinal.length > 0 && (
+                    <span className="text-blue-500">{`$${value} / ${
+                      categoryBudgetsFinal.find((item) => item.category === key)
+                        .budget
+                    }`}</span>
+                  )}
+                  {categoryBudgetsFinal.length === 0 && (
+                    <span className="text-blue-500">{`$${value} /1000
                   }`}</span>
+                  )}
                 </li>
               ))}
             </ul>

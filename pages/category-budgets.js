@@ -11,9 +11,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
+import prisma from "../utils/prismaClient";
 import { ClerkProvider, useUser, SignIn, SignedOut } from "@clerk/nextjs";
-export default function AddTransaction() {
+import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
+export default function SetBudget({ categoryBudgets }) {
   // const categories = [
   //   "Food",
   //   "Snacks",
@@ -22,6 +23,7 @@ export default function AddTransaction() {
   //   "Groceries",
   //   "Medicines",
   // ];
+  console.log(categoryBudgets);
   const { isLoaded, isSignedIn, user } = useUser();
 
   if (!isLoaded || !isSignedIn) {
@@ -94,4 +96,25 @@ export default function AddTransaction() {
     </div>
   );
 }
-// const prisma = new PrismaClient();
+export async function getServerSideProps({ req }) {
+  // console.log(userEmail);
+  const { userId } = getAuth(req);
+
+  const user = userId ? await clerkClient.users.getUser(userId) : undefined;
+  const userEmail = user.emailAddress;
+  const categoryBudgets = await prisma.catgoryBudgets.findMany({
+    where: {
+      userEmail: userEmail,
+      type: "Expense",
+    },
+    include: {
+      category: true,
+      budget: true,
+    },
+  });
+  return {
+    props: {
+      categoryBudgets,
+    },
+  };
+}

@@ -1,4 +1,4 @@
-const categories = {
+export const categories = {
   Expense: [
     "Food",
     "Transportation",
@@ -38,4 +38,13 @@ const categories = {
     "Other",
   ],
 };
-export default categories;
+export const allCategories = [];
+for (const [type, cat] of Object.entries(categories)) {
+  for (const category of cat) {
+    const budgetObj = {
+      type: type,
+      category: category,
+    };
+    allCategories.push(budgetObj);
+  }
+}
