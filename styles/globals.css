@@ -110,3 +110,15 @@ select {
   height: 8px;
   scrollbar-width: thin;
 }
+@media (max-width: 767px) {
+  /* … */
+  .asthetic {
+    min-width: 205px;
+  }
+}
+@media (min-width: 768px) {
+  /* … */
+  .asthetic {
+    min-width: 250px;
+  }
+}

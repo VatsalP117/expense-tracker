@@ -256,9 +256,9 @@ export default function Dashboard(props) {
                   key={key}
                   className="flex justify-between items-center py-2"
                 >
-                  <div className="flex items-center">
+                  <div className="flex items-center asthetic justify-between lg:pl-3">
                     <span className="text-white mr-4">{key}</span>
-                    <div className="bg-gray-700 rounded-full h-4 w-32 overflow-hidden">
+                    <div className="bg-gray-700 rounded-full h-4 w-24 md:w-32 overflow-hidden">
                       {categoryBudgetsFinal.length > 0 && (
                         <div
                           className="bg-blue-500 h-full"

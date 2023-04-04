@@ -1,12 +1,24 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-
+import Image from "next/image";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useState } from "react";
 const Transaction = ({ date, amount, category, type, remarks }) => {
-  // const dateParts = date.split("-");
-  // const dateObject = new Date(dateParts[2], dateParts[1], dateParts[0]);
-
   const dateObject = new Date(date);
-
+  function handleClose() {
+    setIsOpen(false);
+  }
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="flex items-center justify-between py-2 border-b border-gray-800 px-4 md:w-full">
       <div className="flex items-center">
@@ -35,7 +47,7 @@ const Transaction = ({ date, amount, category, type, remarks }) => {
           </p>
         </div>
       </div>
-      <div className="amount-and-remarks flex flex-row justify-between gap-3">
+      <div className="amount-and-remarks flex flex-row justify-between gap-3 items-center">
         {(type == "Expense" || type == "EMI") && (
           <p className=" text-base md:text-lg font-semibold text-red-600 flex items-center">
             {amount}
@@ -52,7 +64,54 @@ const Transaction = ({ date, amount, category, type, remarks }) => {
           </p>
         )}
 
-        <Button type="outline">Remarks</Button>
+        <Button type="outline" className="text-sm md:text-base" size="sm">
+          Remarks
+        </Button>
+        <AlertDialog>
+          <AlertDialogTrigger>
+            {" "}
+            <Image
+              src="/more.png"
+              alt="more-icon"
+              width={24}
+              height={16}
+            ></Image>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Remarks</AlertDialogTitle>
+              <AlertDialogDescription>
+                User remarks will be shown here.Just remind me to implement that
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={() => setIsOpen(true)}>
+                Delete Transaction
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        <AlertDialog open={isOpen} onClose={handleClose}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you sure absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete your
+                account and remove your data from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel onClick={handleClose}>
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction onClick={handleClose}>
+                I'm Sure
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );
