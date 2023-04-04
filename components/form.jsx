@@ -10,10 +10,11 @@ function Form(props) {
   const [category, setCategory] = useState(categories[type][0]);
   const [formData, setFormData] = useState({
     amount: 0,
-    date: new Date(),
+
     remarks: "",
     userEmail: props.userEmail,
   });
+  const [val, setVal] = useState(new Date().toISOString());
   useEffect(() => setCategory(categories[type][0]), [type]);
   const categoriesOptions = categories[type].map((category) => {
     return <option value={category}>{category}</option>;
@@ -24,13 +25,6 @@ function Form(props) {
         return {
           ...prevFormData,
           [event.target.name]: parseInt(event.target.value),
-        };
-      });
-    } else if (event.target.name === "date") {
-      setFormData((prevFormData) => {
-        return {
-          ...prevFormData,
-          [event.target.name]: new Date(event.target.value),
         };
       });
     } else {
@@ -46,25 +40,21 @@ function Form(props) {
     event.preventDefault();
     formData["type"] = type;
     formData["category"] = category;
-    console.log(formData);
+    formData["date"] = new Date(val).toISOString();
     const response1 = fetch("/api/postDB", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     });
-    // const data = await response1[0].json();
-    // console.log(data);
+
     setType("Expense");
     setCategory(categories[type][0]);
     setFormData({
       amount: 0,
-      // type: "Expense",
-      // category: categories[type][0],
-      date: new Date(),
-
       remarks: "",
       userEmail: props.userEmail,
     });
+    setVal(new Date().toISOString());
   }
   return (
     <div className="my-bg min-h-screen flex flex-col items-center justify-start min-w-xl mt-4 md:mt-6 lg:items-start">
@@ -129,8 +119,8 @@ function Form(props) {
             id="dateInput"
             type="date"
             name="date"
-            value={formData.date}
-            onChange={handleChange}
+            value={val}
+            onChange={(e) => setVal(e.target.value)}
           />
         </div>
         {/* stay below */}
@@ -151,13 +141,6 @@ function Form(props) {
             placeholder="(Optional)"
           />
         </div>
-        {/* stay above */}
-        {/* <button
-          className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          type="submit"
-        >
-          Submit
-        </button> */}
         <button
           id="button"
           type="submit"

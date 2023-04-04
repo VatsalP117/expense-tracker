@@ -99,7 +99,8 @@ export default function Dashboard(props) {
     month: "long",
     year: "numeric",
   });
-  const index = pages.indexOf(dateString) - 1;
+  console.log(dateString);
+  const index = pages.indexOf(dateString);
   const [currentPage, setCurrentPage] = useState(index);
 
   useEffect(() => {
@@ -239,21 +240,9 @@ export default function Dashboard(props) {
           <h3 className="text-md md:text-lg text-gray-400 leading-5">
             By default, every category is given a random monthly budget of 1000.
             You are free (and encouraged) to change them as per your will.{" "}
-            <button onClick={() => setBudgetModal(true)}>
-              <span className="text-blue-700 font-bold">
-                Click to modify category budget
-              </span>
-            </button>
           </h3>
         </div>
-        <Dialog open={budgetModal} onOpenChange={setBudgetModal} modal={true}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Set Category Budget</DialogTitle>
-            </DialogHeader>
-            <div>Lol hi</div>
-          </DialogContent>
-        </Dialog>
+
         {filteredTransactions.length === 0 && (
           <p className="text-md md:text-lg text-gray-300 font-bold  -mt-4">
             No transactions found. Add one to get started
