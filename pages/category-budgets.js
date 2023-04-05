@@ -24,13 +24,13 @@ export default function SetBudget({ categoryBudgets }) {
   //   "Groceries",
   //   "Medicines",
   // ];
-  console.log(categoryBudgets);
+  // console.log(categoryBudgets);
   const { isLoaded, isSignedIn, user } = useUser();
 
   if (!isLoaded || !isSignedIn) {
     return null;
   }
-  console.log(user);
+  // console.log(user);
 
   const userEmail = user.emailAddresses[0].emailAddress; //will be fetched by auth, TO BE UPDATED
 

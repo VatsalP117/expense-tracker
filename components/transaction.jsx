@@ -13,9 +13,31 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useState } from "react";
-const Transaction = ({ date, amount, category, type, remarks }) => {
+const Transaction = ({
+  date,
+  amount,
+  category,
+  type,
+  remarks,
+  id,
+  refreshData,
+}) => {
   const dateObject = new Date(date);
+  console.log(id);
   function handleClose() {
+    setIsOpen(false);
+  }
+  function deleteTransaction() {
+    const details = {
+      id: id,
+    };
+    console.log(details);
+    const response1 = fetch("/api/deleteDB", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(details),
+    });
+    refreshData();
     setIsOpen(false);
   }
   const [isOpen, setIsOpen] = useState(false);
@@ -106,7 +128,7 @@ const Transaction = ({ date, amount, category, type, remarks }) => {
               <AlertDialogCancel onClick={handleClose}>
                 Cancel
               </AlertDialogCancel>
-              <AlertDialogAction onClick={handleClose}>
+              <AlertDialogAction onClick={deleteTransaction}>
                 I'm Sure
               </AlertDialogAction>
             </AlertDialogFooter>

@@ -27,7 +27,7 @@ export default function AddTransaction() {
   if (!isLoaded || !isSignedIn) {
     return null;
   }
-  console.log(user);
+  // console.log(user);
 
   const userEmail = user.emailAddresses[0].emailAddress; //will be fetched by auth, TO BE UPDATED
 

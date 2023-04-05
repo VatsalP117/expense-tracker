@@ -19,11 +19,13 @@ import { format } from "date-fns";
 import Image from "next/legacy/image";
 import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
 import { allCategories } from "../utils/categories";
+import { useRouter } from "next/router";
 export default function Dashboard(props) {
   const user = props.user;
-  // console.log(user);
-  // console.log(props.categoryBudgets);
-  // console.log(allCategories);
+  const router = useRouter();
+  const refreshData = () => {
+    router.replace(router.asPath);
+  };
   const [categoryBudgets, setCategoryBudgets] = useState(props.categoryBudgets);
   const [timeline, setTimeline] = useState("This month");
   const [data, setData] = useState([]);
@@ -99,7 +101,7 @@ export default function Dashboard(props) {
     month: "long",
     year: "numeric",
   });
-  console.log(dateString);
+  // console.log(dateString);
   const index = pages.indexOf(dateString);
   const [currentPage, setCurrentPage] = useState(index);
 
@@ -115,8 +117,8 @@ export default function Dashboard(props) {
       return transactionMonth === month;
     });
     setFilteredTransactions(filteredData);
-    console.log("filter done");
-    console.log(filteredTransactions);
+    // console.log("filter done");
+    // console.log(filteredTransactions);
     const categoryData = filteredData.reduce((acc, transaction) => {
       if (transaction.type === "Expense") {
         if (acc[transaction.category]) {
@@ -134,7 +136,7 @@ export default function Dashboard(props) {
   useEffect(handleData, [currentPage, data]);
   // console.log(filteredTransactions);
 
-  console.log(categoryExpenses);
+  // console.log(categoryExpenses);
   let transactionCards;
   if (filteredTransactions.length > 0) {
     transactionCards = filteredTransactions.map((transaction) => {
@@ -146,6 +148,8 @@ export default function Dashboard(props) {
           category={transaction.category}
           amount={transaction.amount}
           remarks={transaction.remarks}
+          id={transaction.id}
+          refreshData={refreshData}
         />
       );
     });
@@ -159,7 +163,7 @@ export default function Dashboard(props) {
     return { type: category.type, category: category.category, budget: budget };
   });
 
-  console.log(categoryBudgetsFinal);
+  // console.log(categoryBudgetsFinal);
   return (
     <div className="dashboard-page flex flex-col items-center gap-5">
       <ResponsiveAppBar setTimeline={setTimeline} user={user} />
@@ -308,7 +312,7 @@ export async function getServerSideProps({ req, resolvedUrl }) {
   const { userId } = getAuth(req);
 
   const user = userId ? await clerkClient.users.getUser(userId) : undefined;
-  console.log(user);
+  // console.log(user);
   // ...
   if (!user) {
     return {
