@@ -86,9 +86,9 @@ const Transaction = ({
           </p>
         )}
 
-        <Button type="outline" className="text-sm md:text-base" size="sm">
+        {/* <Button type="outline" className="text-sm md:text-base" size="sm">
           Remarks
-        </Button>
+        </Button> */}
         <AlertDialog>
           <AlertDialogTrigger>
             {" "}
@@ -103,7 +103,7 @@ const Transaction = ({
             <AlertDialogHeader>
               <AlertDialogTitle>Remarks</AlertDialogTitle>
               <AlertDialogDescription>
-                User remarks will be shown here.Just remind me to implement that
+                {remarks || "No remarks found for this transaction"}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
