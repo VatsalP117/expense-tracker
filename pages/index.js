@@ -8,6 +8,8 @@ import Link from "next/link";
 import Card from "../components/card";
 import Footer from "../components/Footer";
 import TestimonialCard from "../components/testimonial";
+import Hey from "./hey";
+import { useRouter } from "next/router";
 const inter = Inter({ subsets: ["latin"] });
 const testimonials = [
   {

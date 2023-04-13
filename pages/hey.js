@@ -1,11 +1,16 @@
 import React from "react";
+import { useState, CSSProperties } from "react";
+import { PropagateLoader } from "react-spinners";
+import ClipLoader from "react-spinners/ClipLoader";
+import { componentDidMount } from "react";
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
 
-function ComingSoon() {
-  return (
-    <div>
-      <h1 className=" h-min mt-32 md:mt-60 text-6xl md:text-8xl font-bold mx-auto bg-clip-text text-transparent bg-gradient-to-r from-blue-800 via-violet-600 to-indigo-900 ">
-        Coming Soon
-      </h1>
-    </div>
-  );
+function Hey() {
+  return <h1>what</h1>;
 }
+
+export default Hey;

@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import Hey from "./hey";
 // import { PrismaClient } from "@prisma/client";
 import prisma from "../utils/prismaClient";
 import { format } from "date-fns";
@@ -26,6 +27,12 @@ export default function Dashboard(props) {
   const refreshData = () => {
     router.replace(router.asPath);
   };
+
+  // if (router.isFallback) {
+  //   console.log("loading page needed");
+  //   return <Hey />;
+  // }
+
   const [categoryBudgets, setCategoryBudgets] = useState(props.categoryBudgets);
   const [timeline, setTimeline] = useState("This month");
   const [data, setData] = useState([]);
