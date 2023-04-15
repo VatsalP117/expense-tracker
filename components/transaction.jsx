@@ -72,17 +72,17 @@ const Transaction = ({
       <div className="amount-and-remarks flex flex-row justify-between gap-3 items-center">
         {(type == "Expense" || type == "EMI") && (
           <p className=" text-base md:text-lg font-semibold text-red-600 flex items-center">
-            -{amount}$
+            -{amount} $
           </p>
         )}
         {type == "Income" && (
           <p className=" text-base md:text-lg font-semibold text-green-500 flex items-center">
-            +{amount}$
+            +{amount} $
           </p>
         )}
         {type == "Investment" && (
           <p className=" text-base md:text-lg font-semibold text-white flex items-center">
-            -{amount}$
+            -{amount} $
           </p>
         )}
 
