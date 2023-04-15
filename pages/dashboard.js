@@ -126,6 +126,7 @@ export default function Dashboard(props) {
       const transactionMonth = format(new Date(transaction.date), "MMMM yyyy");
       return transactionMonth === month;
     });
+
     setFilteredTransactions(filteredData);
     // console.log("filter done");
     // console.log(filteredTransactions);
@@ -360,6 +361,9 @@ export async function getServerSideProps({ req, resolvedUrl }) {
   const data = await prisma.transaction.findMany({
     where: {
       userEmail: userEmail, //hard-coded, to be changed
+    },
+    orderBy: {
+      date: "desc",
     },
   });
   const categoryBudgets = await prisma.catgoryBudgets.findMany({
