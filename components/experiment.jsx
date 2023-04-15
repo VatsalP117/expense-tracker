@@ -18,9 +18,16 @@ function Card({ title, amount, icon }) {
           <h2 className=" text-sm md:text-base lg:text-lg font-semibold">
             {title}
           </h2>
-          <p className=" text-base md:text-lg lg:text-2xl font-bold">
-            {amount}
-          </p>
+          {amount >= 0 && (
+            <p className=" text-green-500 text-base md:text-lg lg:text-2xl font-bold">
+              +{amount}
+            </p>
+          )}
+          {amount <= 0 && (
+            <p className=" text-red-500 text-base md:text-lg lg:text-2xl font-bold">
+              -{amount}
+            </p>
+          )}
         </div>
         {icon}
       </div>
