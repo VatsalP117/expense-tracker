@@ -155,7 +155,11 @@ function ResponsiveAppBar(props) {
               }}
               TransitionComponent={Transition}
             >
-              <MenuItem className="font-bold mb-6">Welcome.</MenuItem>
+              <MenuItem className="font-bold mb-6">
+                <span className="border-b-4 border-blue-500 my-font text-5xl ">
+                  Welcome.
+                </span>
+              </MenuItem>
               <MenuItem>
                 <Link href="#">Dashboard</Link>
               </MenuItem>

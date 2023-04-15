@@ -1,16 +1,9 @@
 import React from "react";
 import { useState, CSSProperties } from "react";
-import { PropagateLoader } from "react-spinners";
-import ClipLoader from "react-spinners/ClipLoader";
-import { componentDidMount } from "react";
-const override = {
-  display: "block",
-  margin: "0 auto",
-  borderColor: "red",
-};
+import ResponsiveAppBar from "../components/navbar";
 
 function Hey() {
-  return <h1>what</h1>;
+  return <h1 className="font-bold text-6xl text-white m-64">Coming Soon.</h1>;
 }
 
 export default Hey;

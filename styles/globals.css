@@ -47,7 +47,8 @@ html {
   background-color: #23252b !important;
 }
 .MuiMenu-paper {
-  background-color: black !important;
+  --tw-bg-opacity: 1 !important;
+  background-color: #17181c !important;
   /* font-size: 64px; */
   color: aliceblue !important;
   position: absolute !important;
@@ -65,16 +66,13 @@ html {
 }
 .my-font {
   font-family: "Roobert,sans-serif";
-  background: #6717cf;
-  background: linear-gradient(to right, #6717cf 0%, #c315cf 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 .MuiMenuItem-root {
   font-size: 42px;
   line-height: 1;
   font-family: "Roobert,sans-serif";
 }
+
 .width-class {
   min-width: 240px;
 }

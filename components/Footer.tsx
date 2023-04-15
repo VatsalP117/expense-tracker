@@ -16,22 +16,22 @@ export default function Footer() {
       </div>
       <div className="flex space-x-4 pb-4 sm:pb-0">
         <Link
-          href="https://twitter.com/nutlope"
+          href="https://www.linkedin.com/in/vatsal-patel1"
           className="group"
-          aria-label="TaxPal on Twitter"
         >
           <svg
-            aria-hidden="true"
-            className="h-6 w-6 fill-slate-500 group-hover:fill-slate-700"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
           >
-            <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0 0 22 5.92a8.19 8.19 0 0 1-2.357.646 4.118 4.118 0 0 0 1.804-2.27 8.224 8.224 0 0 1-2.605.996 4.107 4.107 0 0 0-6.993 3.743 11.65 11.65 0 0 1-8.457-4.287 4.106 4.106 0 0 0 1.27 5.477A4.073 4.073 0 0 1 2.8 9.713v.052a4.105 4.105 0 0 0 3.292 4.022 4.093 4.093 0 0 1-1.853.07 4.108 4.108 0 0 0 3.834 2.85A8.233 8.233 0 0 1 2 18.407a11.615 11.615 0 0 0 6.29 1.84" />
+            <path
+              fill="#0077B5"
+              d="M17.8 3H2.2C1.01 3 0 4.01 0 5.2v9.6C0 15.99 1.01 17 2.2 17H17.8c1.19 0 2.2-1.01 2.2-2.2v-9.6C20 4.01 18.99 3 17.8 3zM6.59 16.08H3.69V7.53h2.9zM5.13 6.74c-1.01 0-1.83-.82-1.83-1.83s.82-1.83 1.83-1.83 1.83.82 1.83 1.83-0.82 1.83-1.83 1.83zm10.46 9.34h-2.91v-4.95c0-1.17-.02-2.67-1.63-2.67-1.63 0-1.88 1.28-1.88 2.61v4.01H7.46V7.53h2.73v1.39h.04c.38-0.72 1.3-1.49 2.7-1.49 2.88 0 3.41 1.9 3.41 4.38v5.04z"
+            />
           </svg>
         </Link>
-        <Link
-          href="https://github.com/Nutlope/restorePhotos"
-          className="group"
-          aria-label="TaxPal on GitHub"
-        >
+        <Link href="https://github.com/VatsalP117" className="group">
           <svg
             aria-hidden="true"
             className="h-6 w-6 fill-slate-500 group-hover:fill-slate-700"

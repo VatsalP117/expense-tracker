@@ -22,15 +22,15 @@ const testimonials = [
   {
     cardId: 2,
     content:
-      "Every month, I would overspend and have no idea where my money was going. Butever since I started using this expense tracker website, everything has changed. It's so easy to use and helps me keep track of my expenses in real-time.",
-    userName: "Piyush Priya",
+      "Being a freelancer, keeping track of my business expenses was a constant challenge until I found the expense tracker website. It has made it so simple for me to track my business expenses and set budgets for different expense categories",
+    userName: "Dhruv Parashar",
     userProfile: "Student at BITS Pilani",
   },
   {
     cardId: 3,
     content:
-      "Every month, I would overspend and have no idea where my money was going. Butever since I started using this expense tracker website, everything has changed. It's so easy to use and helps me keep track of my expenses in real-time. I can finally see where my money is going and make smarter financial decisions. ",
-    userName: "Piyush Priya",
+      "As a busy professional, keeping track of my expenses used to be a daunting task. But ever since I started using the expense tracker website, it has become incredibly easy and convenient. I can easily input my expenses on-the-go, categorize them, and generate reports for my budgeting needs ",
+    userName: "Reny Shah",
     userProfile: "Student at BITS Pilani",
   },
 ];
