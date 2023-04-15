@@ -21,6 +21,8 @@ import Image from "next/legacy/image";
 import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
 import { allCategories } from "../utils/categories";
 import { useRouter } from "next/router";
+import Card from "../components/experiment";
+import Overview from "../components/overview";
 export default function Dashboard(props) {
   const user = props.user;
   const router = useRouter();
@@ -39,6 +41,7 @@ export default function Dashboard(props) {
   const [budgetModal, setBudgetModal] = useState(false);
   const [filteredTransactions, setFilteredTransactions] = useState([]);
   const [categoryExpenses, setCategoryExpenses] = useState([]);
+
   const [pages, setPages] = useState([
     "January 2020",
     "February 2020",
@@ -142,8 +145,21 @@ export default function Dashboard(props) {
   }
   useEffect(handleData, [currentPage, data]);
   // console.log(filteredTransactions);
+  let overviewData = filteredTransactions.reduce(
+    (acc, currentVal) => {
+      acc[currentVal.type] += currentVal.amount;
 
-  // console.log(categoryExpenses);
+      return acc;
+    },
+    {
+      Expense: 0,
+      Income: 0,
+      Investment: 0,
+      EMI: 0,
+    }
+  );
+  console.log(filteredTransactions);
+  console.log(overviewData);
   let transactionCards;
   if (filteredTransactions.length > 0) {
     transactionCards = filteredTransactions.map((transaction) => {
@@ -176,12 +192,6 @@ export default function Dashboard(props) {
       <ResponsiveAppBar setTimeline={setTimeline} user={user} />
       <div className="max-w-screen-xl mx-auto mt-5 px-4 text-gray-600 md:px-4">
         <div className="flex items-center justify-between text-sm text-gray-600 font-medium gap-4">
-          {/* <button
-            onClick={() => setCurrentPage((currentPage - 1) % pages.length)}
-            className="px-4 py-2 border rounded-lg duration-150 hover:bg-gray-50"
-          >
-            Previous
-          </button> */}
           <Image
             src="/back-button.png"
             alt="Picture of the author"
@@ -210,20 +220,36 @@ export default function Dashboard(props) {
           />
         </div>
       </div>
-      <main className="dashboard-content p-5 max-w-6xl w-full  flex flex-col items-start lg:px-12 gap-6 md:gap-8 ">
-        <div className="dashboard-heading flex flex-col gap-2 items-start justify-start border-yellow-400">
+      <main className="dashboard-content py-6 px-7 max-w-6xl w-full  flex flex-col items-start lg:px-12 gap-6 md:gap-8 ">
+        <div className="dashboard-heading flex flex-col gap-2 items-start justify-start">
           <h1 className="text-blue-500 text-5xl md:text-7xl font-bold sm:text-center md:text-left">
             Overview
           </h1>
-          {/* <h1 className="mx-auto max-w-3xl font-display text-6xl font-bold tracking-normal text-gray-300 sm:text-7xl">
-            <span className="relative whitespace-nowrap text-blue-600">
-              <SquigglyLines />
-              <span className="relative">Overview</span>
-            </span>{" "}
-          </h1> */}
-          <h3 className="text-lg md:text-xl text-gray-400 leading-5">
+
+          {/* <h3 className="text-lg md:text-xl text-gray-400 leading-5">
             Stay up-to-date: Here are your most recent transcations
-          </h3>
+          </h3> */}
+
+          <div className="bg-[#17181c] flex flex-col items-center justify-center mt-2 md:mt-6">
+            <div className="grid grid-cols-2 gap-6 md:gap-12 max-w-screen-md md:flex md:flex-row lg:gap-16 w-full">
+              <Card title="Total Expenses" amount={overviewData.Expense || 0} />
+              <Card
+                title="Total Investments"
+                amount={overviewData.Investment || 0}
+              />
+              <Card title="Total Income" amount={overviewData.Income || 0} />
+              <Card title="Total EMI" amount={overviewData.EMI || 0} />
+              <Card
+                title="Net In/Out"
+                amount={
+                  overviewData.Income -
+                  overviewData.Expense -
+                  overviewData.EMI -
+                  overviewData.Investment
+                }
+              />
+            </div>
+          </div>
         </div>
 
         <div className="dashboard-data w-full">
@@ -242,13 +268,13 @@ export default function Dashboard(props) {
           )}
         </div>
       </main>
-      <main className="budget-constraint max-w-6xl w-full flex flex-col items-start lg:px-12 gap-6 md:gap-8">
-        <div className="dashboard-heading flex flex-col gap-2 items-start justify-start border-yellow-400">
+      <main className="budget-constraint max-w-6xl w-full flex flex-col items-start justify-start gap-6 md:gap-8">
+        <div className="dashboard-heading flex flex-col gap-2 items-start justify-start border-yellow-400 lg:px-12 p-6">
           <h1 className="text-blue-500 text-4xl md:text-6xl font-bold sm:text-center md:text-left">
             Budget Constraints
           </h1>
 
-          <h3 className="text-md md:text-lg text-gray-400 leading-5">
+          <h3 className="text-sm md:text-base lg:text-lg text-gray-400 leading-5">
             By default, every category is given a random monthly budget of 1000.
             You are free (and encouraged) to change them as per your will.{" "}
           </h3>
@@ -260,7 +286,7 @@ export default function Dashboard(props) {
           </p>
         )}
         {filteredTransactions.length != 0 && (
-          <div className="dashboard-data w-full">
+          <div className="dashboard-data w-full md:px-12 px-6">
             <ul>
               {Object.entries(categoryExpenses).map(([key, value]) => (
                 <li
