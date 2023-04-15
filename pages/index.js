@@ -72,11 +72,14 @@ export default function Home() {
           </span>{" "}
           with Ease
         </h1>
-        <h2 className="mx-auto max-w max-w-xl mt-10 text-lg leading-5 text-gray-400 text-center sm:px-4 md:px-6">
-          Take control of your finances and achieve your goals with our sleek
-          expense tracker - track spending, set budgets and save money
-          effortlessly.
-        </h2>
+        <div className="px-10">
+          <h2 className="mx-auto max-w-sm max-w md:max-w-xl mt-10  text-base md:text-lg leading-5 text-gray-400 text-center sm:px-4 md:px-6">
+            Take control of your finances and achieve your goals with our sleek
+            expense tracker - track spending, set budgets and save money
+            effortlessly.
+          </h2>
+        </div>
+
         <Link
           className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-full shadow-lg mt-4 md:mt-6 md:text-lg"
           href="/dashboard"

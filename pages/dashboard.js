@@ -128,8 +128,7 @@ export default function Dashboard(props) {
     });
 
     setFilteredTransactions(filteredData);
-    // console.log("filter done");
-    // console.log(filteredTransactions);
+
     const categoryData = filteredData.reduce((acc, transaction) => {
       if (transaction.type === "Expense") {
         if (acc[transaction.category]) {
@@ -140,12 +139,11 @@ export default function Dashboard(props) {
       }
       return acc;
     }, {});
-    // console.log(filteredTransactions);
 
     setCategoryExpenses(categoryData);
   }
   useEffect(handleData, [currentPage, data]);
-  // console.log(filteredTransactions);
+
   let overviewData = filteredTransactions.reduce(
     (acc, currentVal) => {
       acc[currentVal.type] += currentVal.amount;
@@ -159,8 +157,7 @@ export default function Dashboard(props) {
       EMI: 0,
     }
   );
-  console.log(filteredTransactions);
-  console.log(overviewData);
+
   let transactionCards;
   if (filteredTransactions.length > 0) {
     transactionCards = filteredTransactions.map((transaction) => {
@@ -187,9 +184,8 @@ export default function Dashboard(props) {
     return { type: category.type, category: category.category, budget: budget };
   });
 
-  // console.log(categoryBudgetsFinal);
   return (
-    <div className="dashboard-page flex flex-col items-center gap-5">
+    <div className="dashboard-page flex flex-col items-center gap-5 pb-10 md:pb-24">
       <ResponsiveAppBar setTimeline={setTimeline} user={user} />
       <div className="max-w-screen-xl mx-auto mt-5 px-4 text-gray-600 md:px-4">
         <div className="flex items-center justify-between text-sm text-gray-600 font-medium gap-4">
@@ -201,17 +197,10 @@ export default function Dashboard(props) {
             onClick={() => setCurrentPage((currentPage - 1) % pages.length)}
           />
 
-          {/* <div>{pages[currentPage]}</div> */}
           <h3 className=" font-bold text-base text-gray-400">
             {pages[currentPage]}
           </h3>
 
-          {/* <button
-            onClick={() => setCurrentPage((currentPage + 1) % pages.length)}
-            className="px-4 py-2 border rounded-lg duration-150 hover:bg-gray-50"
-          >
-            Next
-          </button> */}
           <Image
             src="/next-button.png"
             alt="Picture of the author"
@@ -227,19 +216,19 @@ export default function Dashboard(props) {
             Overview
           </h1>
 
-          {/* <h3 className="text-lg md:text-xl text-gray-400 leading-5">
-            Stay up-to-date: Here are your most recent transcations
-          </h3> */}
-
-          <div className="bg-[#17181c] flex flex-col items-center justify-center mt-2 md:mt-6">
-            <div className="grid grid-cols-2 gap-6 md:gap-12 max-w-screen-md md:flex md:flex-row lg:gap-16 w-full">
-              <Card title="Total Expenses" amount={overviewData.Expense || 0} />
+          <div className="bg-[#17181c] flex flex-col md:flex-row items-center justify-center mt-2 md:mt-6">
+            <div className="grid grid-cols-3 gap-6 md:gap-12 max-w-screen-md lg:flex lg:flex-row lg:gap-12">
+              <Card
+                title="Total Expenses"
+                amount={-overviewData.Expense || 0}
+              />
               <Card
                 title="Total Investments"
-                amount={overviewData.Investment || 0}
+                amount={-overviewData.Investment || 0}
               />
               <Card title="Total Income" amount={overviewData.Income || 0} />
-              <Card title="Total EMI" amount={overviewData.EMI || 0} />
+              <Card title="Total EMI" amount={-overviewData.EMI || 0} />
+
               <Card
                 title="Net In/Out"
                 amount={
@@ -254,11 +243,8 @@ export default function Dashboard(props) {
         </div>
 
         <div className="dashboard-data w-full">
-          {/* <Transaction />
-          <Transaction />
-          <Transaction /> */}
           {filteredTransactions.length === 0 && (
-            <p className="text-md md:text-lg text-gray-300 font-bold  -mt-4">
+            <p className="text-md md:text-lg text-gray-300 font-bold  -mt-4 mx-auto text-center">
               No transactions found. Add one to get started
             </p>
           )}
@@ -282,7 +268,7 @@ export default function Dashboard(props) {
         </div>
 
         {filteredTransactions.length === 0 && (
-          <p className="text-md md:text-lg text-gray-300 font-bold  -mt-4">
+          <p className="text-md md:text-lg text-gray-300 font-bold  -mt-8 mx-auto text-center">
             No transactions found. Add one to get started
           </p>
         )}
