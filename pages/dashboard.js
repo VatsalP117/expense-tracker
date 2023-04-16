@@ -14,7 +14,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Hey from "./hey";
-// import { PrismaClient } from "@prisma/client";
+
 import prisma from "../utils/prismaClient";
 import { format } from "date-fns";
 import Image from "next/legacy/image";
@@ -22,18 +22,13 @@ import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
 import { allCategories } from "../utils/categories";
 import { useRouter } from "next/router";
 import Card from "../components/experiment";
-import Overview from "../components/overview";
+
 export default function Dashboard(props) {
   const user = props.user;
   const router = useRouter();
   const refreshData = () => {
     router.replace(router.asPath);
   };
-
-  // if (router.isFallback) {
-  //   console.log("loading page needed");
-  //   return <Hey />;
-  // }
 
   const [categoryBudgets, setCategoryBudgets] = useState(props.categoryBudgets);
   const [timeline, setTimeline] = useState("This month");
@@ -212,7 +207,7 @@ export default function Dashboard(props) {
       </div>
       <main className="dashboard-content py-6 px-7 max-w-6xl w-full  flex flex-col items-start lg:px-12 gap-6 md:gap-8 ">
         <div className="dashboard-heading flex flex-col gap-2 items-start justify-start">
-          <h1 className="text-blue-500 text-5xl md:text-7xl font-bold sm:text-center md:text-left">
+          <h1 className="text-blue-500 text-4xl md:text-6xl font-bold sm:text-center md:text-left">
             Overview
           </h1>
 
@@ -244,7 +239,7 @@ export default function Dashboard(props) {
 
         <div className="dashboard-data w-full">
           {filteredTransactions.length === 0 && (
-            <p className="text-md md:text-lg text-gray-300 font-bold  -mt-4 mx-auto text-center">
+            <p className="text-base md:text-md lg:text-lg text-gray-300 font-bold  -mt-2 mx-auto text-center">
               No transactions found. Add one to get started
             </p>
           )}
@@ -268,7 +263,7 @@ export default function Dashboard(props) {
         </div>
 
         {filteredTransactions.length === 0 && (
-          <p className="text-md md:text-lg text-gray-300 font-bold  -mt-8 mx-auto text-center">
+          <p className="text-base md:text-md lg:text-lg text-gray-300 font-bold  -mt-6 mx-auto text-center">
             No transactions found. Add one to get started
           </p>
         )}

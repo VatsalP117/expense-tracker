@@ -1,35 +1,23 @@
+import Image from "next/legacy/image";
 import Link from "next/link";
 
 export default function Footer() {
   return (
     <footer className="text-center h-16 sm:h-20 w-full sm:pt-2 pt-4 border-t mt-5 flex sm:flex-row flex-col justify-between items-center px-3 space-y-3 sm:mb-0 mb-3 text-gray-400">
       <div>
-        Powered by{" "}
-        <a
-          href="https://vercel.com/"
-          target="_blank"
-          rel="noreferrer"
-          className="font-bold transition "
-        >
-          Vercel.
-        </a>
+        <p className="font-bold transition "> Made with ❤ by Vatsal</p>
       </div>
       <div className="flex space-x-4 pb-4 sm:pb-0">
         <Link
           href="https://www.linkedin.com/in/vatsal-patel1"
           className="group"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-          >
-            <path
-              fill="#0077B5"
-              d="M17.8 3H2.2C1.01 3 0 4.01 0 5.2v9.6C0 15.99 1.01 17 2.2 17H17.8c1.19 0 2.2-1.01 2.2-2.2v-9.6C20 4.01 18.99 3 17.8 3zM6.59 16.08H3.69V7.53h2.9zM5.13 6.74c-1.01 0-1.83-.82-1.83-1.83s.82-1.83 1.83-1.83 1.83.82 1.83 1.83-0.82 1.83-1.83 1.83zm10.46 9.34h-2.91v-4.95c0-1.17-.02-2.67-1.63-2.67-1.63 0-1.88 1.28-1.88 2.61v4.01H7.46V7.53h2.73v1.39h.04c.38-0.72 1.3-1.49 2.7-1.49 2.88 0 3.41 1.9 3.41 4.38v5.04z"
-            />
-          </svg>
+          <Image
+            src="/linkedin-1.png"
+            alt="linked-in-logo"
+            height={24}
+            width={24}
+          />
         </Link>
         <Link href="https://github.com/VatsalP117" className="group">
           <svg
