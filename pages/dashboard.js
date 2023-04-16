@@ -22,6 +22,7 @@ import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
 import { allCategories } from "../utils/categories";
 import { useRouter } from "next/router";
 import Card from "../components/experiment";
+import useSWR from "swr";
 
 export default function Dashboard(props) {
   const user = props.user;
@@ -29,7 +30,7 @@ export default function Dashboard(props) {
   const refreshData = () => {
     router.replace(router.asPath);
   };
-
+  const fetcher = (url) => fetch(url).then((res) => res.json());
   const [categoryBudgets, setCategoryBudgets] = useState(props.categoryBudgets);
   const [timeline, setTimeline] = useState("This month");
   const [data, setData] = useState([]);
@@ -113,7 +114,15 @@ export default function Dashboard(props) {
   useEffect(() => {
     if (props.data.length !== 0) setData(props.data);
   }, [props.data]);
-
+  const { inidata, error, isLoading } = useSWR(
+    "/api/userTransactions" + props.userEmail,
+    fetcher
+  );
+  useEffect(() => {
+    if (inidata) {
+      setData(inidata);
+    }
+  }, [inidata]);
   // console.log(realData);
   function handleData() {
     const month = pages[currentPage];
@@ -360,6 +369,7 @@ export async function getServerSideProps({ res, req, resolvedUrl }) {
       data: JSON.parse(JSON.stringify(data)),
       user: JSON.parse(JSON.stringify(user)),
       categoryBudgets,
+      userEmail,
     },
   };
 }
