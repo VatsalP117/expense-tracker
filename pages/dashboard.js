@@ -125,7 +125,7 @@ export default function Dashboard(props) {
     setFilteredTransactions(filteredData);
 
     const categoryData = filteredData.reduce((acc, transaction) => {
-      if (transaction.type === "Expense") {
+      if (transaction.type === "Expense" || transaction.type === "EMI") {
         if (acc[transaction.category]) {
           acc[transaction.category] += transaction.amount;
         } else {
@@ -186,7 +186,7 @@ export default function Dashboard(props) {
         <div className="flex items-center justify-between text-sm text-gray-600 font-medium gap-4">
           <Image
             src="/back-button.png"
-            alt="Picture of the author"
+            alt="back"
             width={32}
             height={32}
             onClick={() => setCurrentPage((currentPage - 1) % pages.length)}
@@ -198,7 +198,7 @@ export default function Dashboard(props) {
 
           <Image
             src="/next-button.png"
-            alt="Picture of the author"
+            alt="next"
             width={32}
             height={32}
             onClick={() => setCurrentPage((currentPage + 1) % pages.length)}
@@ -239,7 +239,7 @@ export default function Dashboard(props) {
 
         <div className="dashboard-data w-full">
           {filteredTransactions.length === 0 && (
-            <p className="text-base md:text-md lg:text-lg text-gray-300 font-bold  -mt-2 mx-auto text-center">
+            <p className="text-base md:text-md lg:text-lg text-gray-300 font-bold  -mt-2 mx-auto">
               No transactions found. Add one to get started
             </p>
           )}
@@ -250,8 +250,8 @@ export default function Dashboard(props) {
           )}
         </div>
       </main>
-      <main className="budget-constraint max-w-6xl w-full flex flex-col items-start justify-start gap-6 md:gap-8">
-        <div className="dashboard-heading flex flex-col gap-2 items-start justify-start border-yellow-400 lg:px-12 p-6">
+      <main className="budget-constraint max-w-6xl w-full flex flex-col items-start justify-start gap-6 md:gap-8 px-6 lg:px-12">
+        <div className="dashboard-heading flex flex-col gap-2 items-start justify-start ">
           <h1 className="text-blue-500 text-4xl md:text-6xl font-bold sm:text-center md:text-left">
             Budget Constraints
           </h1>
@@ -263,12 +263,12 @@ export default function Dashboard(props) {
         </div>
 
         {filteredTransactions.length === 0 && (
-          <p className="text-base md:text-md lg:text-lg text-gray-300 font-bold  -mt-6 mx-auto text-center">
+          <p className="text-base md:text-md lg:text-lg text-gray-300 font-bold w-full  -mt-2 mx-auto">
             No transactions found. Add one to get started
           </p>
         )}
         {filteredTransactions.length != 0 && (
-          <div className="dashboard-data w-full md:px-12 px-6">
+          <div className="dashboard-data w-full">
             <ul>
               {Object.entries(categoryExpenses).map(([key, value]) => (
                 <li

@@ -34,16 +34,7 @@ const testimonials = [
     userProfile: "Student at BITS Pilani",
   },
 ];
-// const testimonialData = testimonials.map((testimonial) => {
-//   return (
-//     <Card
-//       key={testimonial.cardId}
-//       content={testimonial.content}
-//       userName={testimonial.userName}
-//       userProfile={testimonial.userProfile}
-//     />
-//   );
-// });
+
 const testimonialData = testimonials.map((testimonial) => {
   return (
     <TestimonialCard
@@ -83,7 +74,6 @@ export default function Home() {
         <Link
           className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-full shadow-lg mt-4 md:mt-6 md:text-lg"
           href="/dashboard"
-          // prefetch={false}
         >
           Get Started
         </Link>
