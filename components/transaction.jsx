@@ -20,10 +20,11 @@ const Transaction = ({
   type,
   remarks,
   id,
-  refreshData,
+
+  setData,
 }) => {
   const dateObject = new Date(date);
-  console.log(id);
+
   function handleClose() {
     setIsOpen(false);
   }
@@ -31,13 +32,21 @@ const Transaction = ({
     const details = {
       id: id,
     };
-    console.log(details);
+
     const response1 = fetch("/api/deleteDB", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(details),
+    }).then((res) => {
+      if (res.status == 200) {
+        setData((prevData) => {
+          const newData = prevData.filter((transact) => transact.id != id);
+
+          return newData;
+        });
+      }
     });
-    refreshData();
+
     setIsOpen(false);
   }
   const [isOpen, setIsOpen] = useState(false);

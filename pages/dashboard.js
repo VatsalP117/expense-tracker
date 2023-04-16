@@ -166,6 +166,7 @@ export default function Dashboard(props) {
           remarks={transaction.remarks}
           id={transaction.id}
           refreshData={refreshData}
+          setData={setData}
         />
       );
     });
