@@ -323,8 +323,9 @@ export default function Dashboard(props) {
   );
 }
 // const prisma = new PrismaClient();
-export async function getServerSideProps({ req, resolvedUrl }) {
+export async function getServerSideProps({ res, req, resolvedUrl }) {
   //user-auth
+  res.setHeader("Cache-Control", "no-store");
   const { userId } = getAuth(req);
 
   const user = userId ? await clerkClient.users.getUser(userId) : undefined;
