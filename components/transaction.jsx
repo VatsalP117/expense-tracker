@@ -71,7 +71,7 @@ const Transaction = ({
       </div>
       <div className="amount-and-remarks flex flex-row justify-between gap-3 items-center">
         {(type == "Expense" || type == "EMI") && (
-          <p className=" text-base md:text-lg font-semibold text-red-600 flex items-center">
+          <p className=" text-base md:text-lg font-semibold text-red-500 flex items-center">
             -{amount} $
           </p>
         )}
