@@ -50,6 +50,7 @@ const Transaction = ({
     setIsOpen(false);
   }
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className="flex items-center justify-between py-2 border-b border-gray-800 px-4 md:w-full">
       <div className="flex items-center">
@@ -130,7 +131,8 @@ const Transaction = ({
               <AlertDialogTitle>Are you sure absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
                 This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers.
+                account and remove your data from our servers. Please note that
+                it might take a few seconds to reflect the changes
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

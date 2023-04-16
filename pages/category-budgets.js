@@ -16,23 +16,13 @@ import { ClerkProvider, useUser, SignIn, SignedOut } from "@clerk/nextjs";
 import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
 import BackButton from "../components/dashboard-button";
 export default function SetBudget({ categoryBudgets }) {
-  // const categories = [
-  //   "Food",
-  //   "Snacks",
-  //   "Travel",
-  //   "Home",
-  //   "Groceries",
-  //   "Medicines",
-  // ];
-  // console.log(categoryBudgets);
   const { isLoaded, isSignedIn, user } = useUser();
 
   if (!isLoaded || !isSignedIn) {
     return null;
   }
-  // console.log(user);
 
-  const userEmail = user.emailAddresses[0].emailAddress; //will be fetched by auth, TO BE UPDATED
+  const userEmail = user.emailAddresses[0].emailAddress;
 
   function handleChange(event) {
     setNewCat((prevFormData) => {
@@ -77,7 +67,6 @@ export default function SetBudget({ categoryBudgets }) {
   );
 }
 export async function getServerSideProps({ req }) {
-  // console.log(userEmail);
   const { userId } = getAuth(req);
 
   const user = userId ? await clerkClient.users.getUser(userId) : undefined;
@@ -87,10 +76,6 @@ export async function getServerSideProps({ req }) {
       userEmail: userEmail,
       type: "Expense",
     },
-    // include: {
-    //   category: true,
-    //   budget: true,
-    // },
   });
   return {
     props: {

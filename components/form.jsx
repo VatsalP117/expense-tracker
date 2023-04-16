@@ -3,9 +3,20 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { useEffect } from "react";
 import { categories } from "../utils/categories";
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useRouter } from "next/router";
 function Form(props) {
-  console.log(categories);
+  const router = useRouter();
   const [type, setType] = useState("Expense");
   const [category, setCategory] = useState(categories[type][0]);
   const [formData, setFormData] = useState({
@@ -15,6 +26,7 @@ function Form(props) {
     userEmail: props.userEmail,
   });
   const [val, setVal] = useState(new Date().toISOString());
+  const [isOpen, setIsOpen] = useState(false);
   useEffect(() => setCategory(categories[type][0]), [type]);
   const categoriesOptions = categories[type].map((category) => {
     return <option value={category}>{category}</option>;
@@ -55,6 +67,7 @@ function Form(props) {
       userEmail: props.userEmail,
     });
     setVal(new Date().toISOString());
+    setIsOpen(true);
   }
   return (
     <div className="my-bg min-h-screen flex flex-col items-center justify-start min-w-xl mt-4 md:mt-6 lg:items-start">
@@ -102,6 +115,7 @@ function Form(props) {
             type="number"
             placeholder="Enter transcation amount"
             name="amount"
+            min="1"
             value={formData.amount}
             onChange={handleChange}
           />
@@ -149,6 +163,35 @@ function Form(props) {
           Submit
         </button>
       </form>
+      <AlertDialog open={isOpen} onClose={setIsOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Do you wish to add any more transaction?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Clicking on No will take you back to the dashboard page
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              onClick={() => {
+                setIsOpen(false);
+                router.push("/dashboard");
+              }}
+            >
+              No
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                setIsOpen(false);
+              }}
+            >
+              Yes
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

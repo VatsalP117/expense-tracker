@@ -53,6 +53,7 @@ function ResponsiveAppBar(props) {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+    console.log("i was clicked");
   };
 
   const handleCloseUserMenu = () => {
@@ -67,11 +68,11 @@ function ResponsiveAppBar(props) {
   const handleModalClose = () => {
     setModalOpen(false);
   };
-  const Transition = React.forwardRef<HTMLDivElement, SlideProps>(
-    function Transition(props, ref) {
-      return <Slide direction="right" ref={ref} {...props} />;
-    }
-  );
+  // const Transition = React.forwardRef<HTMLDivElement, SlideProps>(
+  //   function Transition(props, ref) {
+  //     return <Slide direction="right" ref={ref} {...props} />;
+  //   }
+  // );
 
   const [newTimeline, setNewTimeline] = React.useState<string>("This week");
   const handleSubmit = (event) => {
@@ -153,12 +154,39 @@ function ResponsiveAppBar(props) {
               sx={{
                 display: { xs: "block", md: "none" },
               }}
-              TransitionComponent={Transition}
+              // TransitionComponent={Transition}
             >
-              <MenuItem className="font-bold mb-6">
+              <MenuItem className="font-bold mb-6 flex flex-row justify-between">
                 <span className="border-b-4 border-blue-500 my-font text-5xl ">
                   Welcome.
                 </span>
+                <button
+                  onClick={() => {
+                    setModalOpen(false);
+                    setAnchorElNav(null);
+                    setAnchorElUser(null);
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="11"
+                      fill="#ffffff"
+                      stroke="#000000"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M15.29 8.29L12 11.59l-3.29-3.29c-0.39-0.39-1.02-0.39-1.41 0s-0.39 1.02 0 1.41l3.29 3.29-3.29 3.29c-0.39 0.39-0.39 1.02 0 1.41s1.02 0.39 1.41 0l3.29-3.29 3.29 3.29c0.39 0.39 1.02 0.39 1.41 0s0.39-1.02 0-1.41l-3.29-3.29 3.29-3.29c0.39-0.39 0.39-1.02 0-1.41s-1.02-0.39-1.41 0z"
+                      fill="#000000"
+                    />
+                  </svg>
+                </button>
               </MenuItem>
               <MenuItem>
                 <Link href="#">Dashboard</Link>
