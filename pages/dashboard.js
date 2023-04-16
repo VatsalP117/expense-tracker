@@ -116,7 +116,8 @@ export default function Dashboard(props) {
   }, [props.data]);
   const { inidata, error, isLoading } = useSWR(
     "/api/userTransactions" + props.userEmail,
-    fetcher
+    fetcher,
+    { refreshInterval: 100, refreshWhenHidden: true }
   );
   useEffect(() => {
     if (inidata) {
