@@ -12,16 +12,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import BackButton from "../components/dashboard-button";
+import useSWR, { useSWRConfig } from "swr";
 import { ClerkProvider, useUser, SignIn, SignedOut } from "@clerk/nextjs";
 export default function AddTransaction() {
-  // const categories = [
-  //   "Food",
-  //   "Snacks",
-  //   "Travel",
-  //   "Home",
-  //   "Groceries",
-  //   "Medicines",
-  // ];
+  const { mutate } = useSWRConfig();
   const { isLoaded, isSignedIn, user } = useUser();
 
   if (!isLoaded || !isSignedIn) {
@@ -39,32 +33,10 @@ export default function AddTransaction() {
       };
     });
   }
-  // async function handleSubmit(e) {
-  //   e.preventDefault();
 
-  //   setCategoryOpen(false);
-  //   setNewCat({});
-  //   const response1 = fetch("/api/postCat", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(newCat),
-  //   });
-
-  //   setNewCat({
-  //     cateory: "",
-  //     budget: "1000",
-  //     userEmail: "vatsal4011@gmail.com",
-  //   });
-  // }
   return (
     <div className=" max-w-5xl mx-auto flex flex-col py-12 px-6 md:gap-6 gap-3">
       <div className="mb-8">
-        {/* <Link
-          className="bg-indigo-600 shadow-xl hover:bg-indigo-500 text-white font-bold rounded-full p-4 w-48"
-          href="/dashboard"
-        >
-          ⬅️ Dashboard
-        </Link> */}
         <BackButton />
       </div>
       <div className="flex flex-col gap-2">
@@ -72,7 +44,7 @@ export default function AddTransaction() {
           Add Transaction
         </h1>
       </div>
-      <Form userEmail={userEmail} />
+      <Form userEmail={userEmail} mutate={mutate} />
     </div>
   );
 }

@@ -22,7 +22,7 @@ import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
 import { allCategories } from "../utils/categories";
 import { useRouter } from "next/router";
 import Card from "../components/experiment";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 
 export default function Dashboard(props) {
   const user = props.user;
@@ -31,6 +31,7 @@ export default function Dashboard(props) {
     router.replace(router.asPath);
   };
   const fetcher = (url) => fetch(url).then((res) => res.json());
+  const { mutate } = useSWRConfig();
   const [categoryBudgets, setCategoryBudgets] = useState(props.categoryBudgets);
   const [timeline, setTimeline] = useState("This month");
   const [data, setData] = useState([]);
