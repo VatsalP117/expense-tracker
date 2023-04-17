@@ -112,9 +112,9 @@ export default function Dashboard(props) {
   const index = pages.indexOf(dateString);
   const [currentPage, setCurrentPage] = useState(index);
 
-  useEffect(() => {
-    if (props.data.length !== 0) setData(props.data);
-  }, [props.data]);
+  // useEffect(() => {
+  //   if (props.data.length !== 0) setData(props.data);
+  // }, [props.data]);
   const { inidata, error, isLoading } = useSWR(
     "/api/userTransactions" + props.userEmail,
     fetcher,
@@ -336,7 +336,7 @@ export default function Dashboard(props) {
 // const prisma = new PrismaClient();
 export async function getServerSideProps({ res, req, resolvedUrl }) {
   //user-auth
-  res.setHeader("Cache-Control", "no-store");
+  // res.setHeader("Cache-Control", "no-store");
   const { userId } = getAuth(req);
 
   const user = userId ? await clerkClient.users.getUser(userId) : undefined;
@@ -352,14 +352,14 @@ export async function getServerSideProps({ res, req, resolvedUrl }) {
     };
   }
   const userEmail = user.emailAddresses[0].emailAddress;
-  const data = await prisma.transaction.findMany({
-    where: {
-      userEmail: userEmail, //hard-coded, to be changed
-    },
-    orderBy: {
-      date: "desc",
-    },
-  });
+  // const data = await prisma.transaction.findMany({
+  //   where: {
+  //     userEmail: userEmail, //hard-coded, to be changed
+  //   },
+  //   orderBy: {
+  //     date: "desc",
+  //   },
+  // });
   const categoryBudgets = await prisma.catgoryBudgets.findMany({
     where: {
       userEmail: userEmail,
@@ -368,7 +368,6 @@ export async function getServerSideProps({ res, req, resolvedUrl }) {
   });
   return {
     props: {
-      data: JSON.parse(JSON.stringify(data)),
       user: JSON.parse(JSON.stringify(user)),
       categoryBudgets,
       userEmail,
