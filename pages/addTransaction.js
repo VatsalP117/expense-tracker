@@ -15,7 +15,7 @@ import BackButton from "../components/dashboard-button";
 import useSWR, { useSWRConfig } from "swr";
 import { ClerkProvider, useUser, SignIn, SignedOut } from "@clerk/nextjs";
 export default function AddTransaction() {
-  const { mutate } = useSWRConfig();
+  // const { mutate } = useSWRConfig();
   const { isLoaded, isSignedIn, user } = useUser();
 
   if (!isLoaded || !isSignedIn) {
@@ -44,7 +44,7 @@ export default function AddTransaction() {
           Add Transaction
         </h1>
       </div>
-      <Form userEmail={userEmail} mutate={mutate} />
+      <Form userEmail={userEmail} />
     </div>
   );
 }

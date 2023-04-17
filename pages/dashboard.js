@@ -31,7 +31,7 @@ export default function Dashboard(props) {
     router.replace(router.asPath);
   };
   const fetcher = (url) => fetch(url).then((res) => res.json());
-  const { mutate } = useSWRConfig();
+  c;
   const [categoryBudgets, setCategoryBudgets] = useState(props.categoryBudgets);
   const [timeline, setTimeline] = useState("This month");
   const [data, setData] = useState([]);

@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useRouter } from "next/router";
 function Form(props) {
-  const mutate = props.mutate;
   const router = useRouter();
   const [type, setType] = useState("Expense");
   const [category, setCategory] = useState(categories[type][0]);
@@ -68,7 +67,7 @@ function Form(props) {
       userEmail: props.userEmail,
     });
     setVal(new Date().toISOString());
-    mutate("/api/userTransactions" + props.userEmail);
+
     setIsOpen(true);
   }
   return (
