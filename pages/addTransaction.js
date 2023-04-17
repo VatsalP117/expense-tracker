@@ -11,6 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import useSwr from "swr";
 import BackButton from "../components/dashboard-button";
 import { ClerkProvider, useUser, SignIn, SignedOut } from "@clerk/nextjs";
 export default function AddTransaction() {
@@ -22,8 +23,14 @@ export default function AddTransaction() {
   //   "Groceries",
   //   "Medicines",
   // ];
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { isLoaded, isSignedIn, user } = useUser();
+  const { data, error } = useSwr(
+    "/api/handletransactions/vatsal4011@gmail.com",
+    fetcher
+  );
 
+  console.log(data);
   if (!isLoaded || !isSignedIn) {
     return null;
   }

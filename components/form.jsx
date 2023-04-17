@@ -14,6 +14,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+
 import { useRouter } from "next/router";
 function Form(props) {
   const router = useRouter();
@@ -68,6 +69,9 @@ function Form(props) {
     });
     setVal(new Date().toISOString());
     setIsOpen(true);
+    // const res = await fetch("/api/handletransactions/vatsal4011@gmail.com");
+    // const dat1 = await res.json();
+    // console.log(dat1);
   }
   return (
     <div className="my-bg min-h-screen flex flex-col items-center justify-start min-w-xl mt-4 md:mt-6 lg:items-start">

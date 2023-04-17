@@ -14,7 +14,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Hey from "./hey";
-
+import useSwr from "swr";
 import prisma from "../utils/prismaClient";
 import { format } from "date-fns";
 import Image from "next/legacy/image";
@@ -25,6 +25,11 @@ import Card from "../components/experiment";
 
 export default function Dashboard(props) {
   const user = props.user;
+  // const fetcher = async (url) => {
+  //   const res = await fetch(url);
+  //   return res.json();
+  // };
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const router = useRouter();
   const refreshData = () => {
     router.replace(router.asPath);
@@ -32,7 +37,7 @@ export default function Dashboard(props) {
 
   const [categoryBudgets, setCategoryBudgets] = useState(props.categoryBudgets);
   const [timeline, setTimeline] = useState("This month");
-  const [data, setData] = useState([]);
+  const [data1, setData] = useState([]);
   const [budgetModal, setBudgetModal] = useState(false);
   const [filteredTransactions, setFilteredTransactions] = useState([]);
   const [categoryExpenses, setCategoryExpenses] = useState([]);
@@ -114,10 +119,21 @@ export default function Dashboard(props) {
     if (props.data.length !== 0) setData(props.data);
   }, [props.data]);
 
+  const { data, error } = useSwr(
+    "/api/handletransactions/vatsal4011@gmail.com",
+    fetcher
+  );
+  // console.log(props.userEmail);
+  // console.log(dat1);
+  useEffect(() => {
+    if (data) {
+      setData(data);
+    }
+  }, [data]);
   // console.log(realData);
   function handleData() {
     const month = pages[currentPage];
-    const filteredData = data.filter((transaction) => {
+    const filteredData = data1.filter((transaction) => {
       const transactionMonth = format(new Date(transaction.date), "MMMM yyyy");
       return transactionMonth === month;
     });
@@ -137,7 +153,7 @@ export default function Dashboard(props) {
 
     setCategoryExpenses(categoryData);
   }
-  useEffect(handleData, [currentPage, data]);
+  useEffect(handleData, [currentPage, data1]);
 
   let overviewData = filteredTransactions.reduce(
     (acc, currentVal) => {
@@ -360,6 +376,7 @@ export async function getServerSideProps({ res, req, resolvedUrl }) {
       data: JSON.parse(JSON.stringify(data)),
       user: JSON.parse(JSON.stringify(user)),
       categoryBudgets,
+      userEmail,
     },
   };
 }

@@ -14,8 +14,10 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useRouter } from "next/router";
+import useSWR, { useSWRConfig } from "swr";
 
 function BudgetForm(props) {
+  const { mutate } = useSWRConfig();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const categories = {
@@ -82,6 +84,7 @@ function BudgetForm(props) {
     setCategory(categories[type][0]);
     setNewBudget(1000);
     setIsOpen(true);
+    mutate("api/handletransactions/vatsal4011@gmail.com");
   }
   return (
     <div className="my-bg min-h-screen flex flex-col items-center justify-start min-w-xl mt-4 md:mt-6 md:items-start">
