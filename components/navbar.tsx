@@ -68,11 +68,6 @@ function ResponsiveAppBar(props) {
   const handleModalClose = () => {
     setModalOpen(false);
   };
-  // const Transition = React.forwardRef<HTMLDivElement, SlideProps>(
-  //   function Transition(props, ref) {
-  //     return <Slide direction="right" ref={ref} {...props} />;
-  //   }
-  // );
 
   const [newTimeline, setNewTimeline] = React.useState<string>("This week");
   const handleSubmit = (event) => {
@@ -93,8 +88,6 @@ function ResponsiveAppBar(props) {
             <DialogTitle>Set Budget</DialogTitle>
           </DialogHeader>
           <div>
-            {/* This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers. */}
             <form
               className=" p-8 rounded-lg shadow-lg flex flex-col items-start justify-start w-xl gap-3 text-lg bg-slate-800"
               onSubmit={handleSubmit}
@@ -195,8 +188,6 @@ function ResponsiveAppBar(props) {
                 <Link href="/addTransaction">Add Transaction</Link>
               </MenuItem>
               <MenuItem>
-                {/* <p>Change Timeline</p> */}
-                {/* <button onClick={handleModalOpen}>Set Budget</button> */}
                 <Link href="/category-budgets">Set Budget</Link>
               </MenuItem>
               <MenuItem>
@@ -213,8 +204,7 @@ function ResponsiveAppBar(props) {
               Dashboard
             </Link>
             <Link href="/addTransaction">Add Transaction</Link>
-            {/* <p>Change Timeline</p> */}
-            {/* <button onClick={handleModalOpen}>Set Budget</button> */}
+
             <Link href="/category-budgets">Set Budget</Link>
             <Link href="/hey">Analytics</Link>
           </Box>

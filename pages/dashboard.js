@@ -97,20 +97,16 @@ export default function Dashboard(props) {
     "November 2024",
     "December 2024",
   ]);
-  // console.log(allData);
+
   const [finalCategoryBudgets, setFinalCategoryBudgets] = useState([]);
   const date = new Date();
   const dateString = date.toLocaleString("en-US", {
     month: "long",
     year: "numeric",
   });
-  // console.log(dateString);
+
   const index = pages.indexOf(dateString);
   const [currentPage, setCurrentPage] = useState(index);
-
-  // useEffect(() => {
-  //   if (props.data.length !== 0) setData(props.data);
-  // }, [props.data]);
 
   const { data, error } = useSwr(
     "/api/handletransactions/" + props.userEmail,
@@ -356,8 +352,7 @@ export async function getServerSideProps({ res, req, resolvedUrl }) {
   const { userId } = getAuth(req);
 
   const user = userId ? await clerkClient.users.getUser(userId) : undefined;
-  // console.log(user);
-  // ...
+
   if (!user) {
     return {
       redirect: {
@@ -370,7 +365,7 @@ export async function getServerSideProps({ res, req, resolvedUrl }) {
   const userEmail = user.emailAddresses[0].emailAddress;
   const data = await prisma.transaction.findMany({
     where: {
-      userEmail: userEmail, //hard-coded, to be changed
+      userEmail: userEmail,
     },
     orderBy: {
       date: "desc",
