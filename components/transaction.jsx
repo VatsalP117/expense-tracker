@@ -89,6 +89,9 @@ const Transaction = ({
           </p>
         )}
 
+        {/* <Button type="outline" className="text-sm md:text-base" size="sm">
+          Remarks
+        </Button> */}
         <AlertDialog>
           <AlertDialogTrigger>
             {" "}

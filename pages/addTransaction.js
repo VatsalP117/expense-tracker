@@ -15,6 +15,14 @@ import useSwr from "swr";
 import BackButton from "../components/dashboard-button";
 import { ClerkProvider, useUser, SignIn, SignedOut } from "@clerk/nextjs";
 export default function AddTransaction() {
+  // const categories = [
+  //   "Food",
+  //   "Snacks",
+  //   "Travel",
+  //   "Home",
+  //   "Groceries",
+  //   "Medicines",
+  // ];
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { isLoaded, isSignedIn, user } = useUser();
   const { data, error } = useSwr(
@@ -22,11 +30,13 @@ export default function AddTransaction() {
     fetcher
   );
 
+  // console.log(data);
   if (!isLoaded || !isSignedIn) {
     return null;
   }
+  // console.log(user);
 
-  const userEmail = user.emailAddresses[0].emailAddress;
+  const userEmail = user.emailAddresses[0].emailAddress; //will be fetched by auth, TO BE UPDATED
 
   function handleChange(event) {
     setNewCat((prevFormData) => {
@@ -40,6 +50,12 @@ export default function AddTransaction() {
   return (
     <div className=" max-w-5xl mx-auto flex flex-col py-12 px-6 md:gap-6 gap-3">
       <div className="mb-8">
+        {/* <Link
+          className="bg-indigo-600 shadow-xl hover:bg-indigo-500 text-white font-bold rounded-full p-4 w-48"
+          href="/dashboard"
+        >
+          ⬅️ Dashboard
+        </Link> */}
         <BackButton />
       </div>
       <div className="flex flex-col gap-2">
@@ -51,3 +67,4 @@ export default function AddTransaction() {
     </div>
   );
 }
+// const prisma = new PrismaClient();
