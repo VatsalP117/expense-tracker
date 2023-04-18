@@ -22,22 +22,15 @@ import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
 import { allCategories } from "../utils/categories";
 import { useRouter } from "next/router";
 import Card from "../components/experiment";
-
+import prisma from "../utils/prismaClient";
 export default function Dashboard(props) {
   const user = props.user;
-  // const fetcher = async (url) => {
-  //   const res = await fetch(url);
-  //   return res.json();
-  // };
-  const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  const router = useRouter();
-  const refreshData = () => {
-    router.replace(router.asPath);
-  };
 
-  const [categoryBudgets, setCategoryBudgets] = useState([]);
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+  const [categoryBudgets, setCategoryBudgets] = useState(props.categoryBudgets);
   const [timeline, setTimeline] = useState("This month");
-  const [data1, setData] = useState([]);
+  const [data1, setData] = useState(props.data);
   const [budgetModal, setBudgetModal] = useState(false);
   const [filteredTransactions, setFilteredTransactions] = useState([]);
   const [categoryExpenses, setCategoryExpenses] = useState([]);
@@ -200,8 +193,6 @@ export default function Dashboard(props) {
           amount={transaction.amount}
           remarks={transaction.remarks}
           id={transaction.id}
-          refreshData={refreshData}
-          setData={setData}
           userEmail={props.userEmail}
         />
       );
@@ -377,24 +368,25 @@ export async function getServerSideProps({ res, req, resolvedUrl }) {
     };
   }
   const userEmail = user.emailAddresses[0].emailAddress;
-  // const data = await prisma.transaction.findMany({
-  //   where: {
-  //     userEmail: userEmail, //hard-coded, to be changed
-  //   },
-  //   orderBy: {
-  //     date: "desc",
-  //   },
-  // });
-  // const categoryBudgets = await prisma.catgoryBudgets.findMany({
-  //   where: {
-  //     userEmail: userEmail,
-  //     type: "Expense",
-  //   },
-  // });
+  const data = await prisma.transaction.findMany({
+    where: {
+      userEmail: userEmail, //hard-coded, to be changed
+    },
+    orderBy: {
+      date: "desc",
+    },
+  });
+  const categoryBudgets = await prisma.catgoryBudgets.findMany({
+    where: {
+      userEmail: userEmail,
+      type: "Expense",
+    },
+  });
   return {
     props: {
       user: JSON.parse(JSON.stringify(user)),
-
+      data: JSON.parse(JSON.stringify(data)),
+      categoryBudgets: JSON.parse(JSON.stringify(categoryBudgets)),
       userEmail,
     },
   };

@@ -64,11 +64,14 @@ html {
   left: 0 !important;
   right: 0 !important;
 }
+.card-width {
+  min-width: 82px;
+}
 .my-font {
   font-family: "Roobert,sans-serif";
 }
 .MuiMenuItem-root {
-  font-size: 42px;
+  font-size: 36px;
   line-height: 1;
   font-family: "Roobert,sans-serif";
 }

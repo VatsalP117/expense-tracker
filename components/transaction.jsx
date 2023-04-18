@@ -22,7 +22,6 @@ const Transaction = ({
   remarks,
   id,
   userEmail,
-  setData,
 }) => {
   const dateObject = new Date(date);
   const { mutate } = useSWRConfig();
@@ -40,6 +39,7 @@ const Transaction = ({
       body: JSON.stringify(details),
     });
     mutate("api/handletransactions/" + userEmail, { revalidate: true });
+    mutate("/api/categorybudgets" + userEmail, { revalidate: true });
     setIsOpen(false);
   }
   const [isOpen, setIsOpen] = useState(false);
