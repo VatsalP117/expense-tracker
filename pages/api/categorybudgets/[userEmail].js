@@ -2,15 +2,13 @@ import prisma from "../../../utils/prismaClient";
 export default async function handler(req, res) {
   try {
     const { userEmail } = req.query;
-    const newObject = await prisma.transaction.findMany({
+    const categoryBudgets = await prisma.catgoryBudgets.findMany({
       where: {
         userEmail: userEmail,
-      },
-      orderBy: {
-        date: "desc",
+        type: "Expense",
       },
     });
-    res.status(200).json(newObject);
+    res.status(200).json(categoryBudgets);
   } catch {
     throw new Error("Please try again!");
   }

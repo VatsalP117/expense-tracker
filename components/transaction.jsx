@@ -13,6 +13,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useState } from "react";
+import useSWR, { useSWRConfig } from "swr";
 const Transaction = ({
   date,
   amount,
@@ -20,11 +21,11 @@ const Transaction = ({
   type,
   remarks,
   id,
-
+  userEmail,
   setData,
 }) => {
   const dateObject = new Date(date);
-
+  const { mutate } = useSWRConfig();
   function handleClose() {
     setIsOpen(false);
   }
@@ -37,16 +38,8 @@ const Transaction = ({
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(details),
-    }).then((res) => {
-      if (res.status == 200) {
-        setData((prevData) => {
-          const newData = prevData.filter((transact) => transact.id != id);
-
-          return newData;
-        });
-      }
     });
-
+    mutate("api/handletransactions/" + userEmail, { revalidate: true });
     setIsOpen(false);
   }
   const [isOpen, setIsOpen] = useState(false);

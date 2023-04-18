@@ -14,9 +14,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-
+import useSWR, { useSWRConfig } from "swr";
 import { useRouter } from "next/router";
 function Form(props) {
+  const { mutate } = useSWRConfig();
   const router = useRouter();
   const [type, setType] = useState("Expense");
   const [category, setCategory] = useState(categories[type][0]);
@@ -69,9 +70,8 @@ function Form(props) {
     });
     setVal(new Date().toISOString());
     setIsOpen(true);
-    // const res = await fetch("/api/handletransactions/vatsal4011@gmail.com");
-    // const dat1 = await res.json();
-    // console.log(dat1);
+
+    mutate("api/handletransactions/" + props.userEmail, { revalidate: true });
   }
   return (
     <div className="my-bg min-h-screen flex flex-col items-center justify-start min-w-xl mt-4 md:mt-6 lg:items-start">

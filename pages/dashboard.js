@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import Hey from "./hey";
 import useSwr from "swr";
-import prisma from "../utils/prismaClient";
+
 import { format } from "date-fns";
 import Image from "next/legacy/image";
 import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
@@ -35,7 +35,7 @@ export default function Dashboard(props) {
     router.replace(router.asPath);
   };
 
-  const [categoryBudgets, setCategoryBudgets] = useState(props.categoryBudgets);
+  const [categoryBudgets, setCategoryBudgets] = useState([]);
   const [timeline, setTimeline] = useState("This month");
   const [data1, setData] = useState([]);
   const [budgetModal, setBudgetModal] = useState(false);
@@ -115,22 +115,41 @@ export default function Dashboard(props) {
   const index = pages.indexOf(dateString);
   const [currentPage, setCurrentPage] = useState(index);
 
-  useEffect(() => {
-    if (props.data.length !== 0) setData(props.data);
-  }, [props.data]);
+  // useEffect(() => {
+  //   if (props.data.length !== 0) setData(props.data);
+  // }, [props.data]);
 
   const { data, error } = useSwr(
-    "/api/handletransactions/vatsal4011@gmail.com",
-    fetcher
+    "/api/handletransactions/" + props.userEmail,
+    fetcher,
+    {
+      refreshInterval: 1000,
+      refreshWhenHidden: true,
+      revalidateOnFocus: true,
+      revalidateIfStale: true,
+    }
   );
-  // console.log(props.userEmail);
-  // console.log(dat1);
   useEffect(() => {
     if (data) {
       setData(data);
     }
   }, [data]);
-  // console.log(realData);
+  const { data: categorySWR, error: catError } = useSwr(
+    "/api/categorybudgets/" + props.userEmail,
+    fetcher,
+    {
+      refreshInterval: 1000,
+      refreshWhenHidden: true,
+      revalidateOnFocus: true,
+      revalidateIfStale: true,
+    }
+  );
+  useEffect(() => {
+    if (categorySWR) {
+      setCategoryBudgets(categorySWR);
+    }
+  }, [categorySWR]);
+
   function handleData() {
     const month = pages[currentPage];
     const filteredData = data1.filter((transaction) => {
@@ -183,6 +202,7 @@ export default function Dashboard(props) {
           id={transaction.id}
           refreshData={refreshData}
           setData={setData}
+          userEmail={props.userEmail}
         />
       );
     });
@@ -357,25 +377,24 @@ export async function getServerSideProps({ res, req, resolvedUrl }) {
     };
   }
   const userEmail = user.emailAddresses[0].emailAddress;
-  const data = await prisma.transaction.findMany({
-    where: {
-      userEmail: userEmail, //hard-coded, to be changed
-    },
-    orderBy: {
-      date: "desc",
-    },
-  });
-  const categoryBudgets = await prisma.catgoryBudgets.findMany({
-    where: {
-      userEmail: userEmail,
-      type: "Expense",
-    },
-  });
+  // const data = await prisma.transaction.findMany({
+  //   where: {
+  //     userEmail: userEmail, //hard-coded, to be changed
+  //   },
+  //   orderBy: {
+  //     date: "desc",
+  //   },
+  // });
+  // const categoryBudgets = await prisma.catgoryBudgets.findMany({
+  //   where: {
+  //     userEmail: userEmail,
+  //     type: "Expense",
+  //   },
+  // });
   return {
     props: {
-      data: JSON.parse(JSON.stringify(data)),
       user: JSON.parse(JSON.stringify(user)),
-      categoryBudgets,
+
       userEmail,
     },
   };

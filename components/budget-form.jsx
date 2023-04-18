@@ -84,7 +84,7 @@ function BudgetForm(props) {
     setCategory(categories[type][0]);
     setNewBudget(1000);
     setIsOpen(true);
-    mutate("api/handletransactions/vatsal4011@gmail.com");
+    mutate("api/categorybudgets/" + props.userEmail);
   }
   return (
     <div className="my-bg min-h-screen flex flex-col items-center justify-start min-w-xl mt-4 md:mt-6 md:items-start">

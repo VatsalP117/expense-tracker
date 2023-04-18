@@ -30,7 +30,7 @@ export default function AddTransaction() {
     fetcher
   );
 
-  console.log(data);
+  // console.log(data);
   if (!isLoaded || !isSignedIn) {
     return null;
   }
@@ -46,23 +46,7 @@ export default function AddTransaction() {
       };
     });
   }
-  // async function handleSubmit(e) {
-  //   e.preventDefault();
 
-  //   setCategoryOpen(false);
-  //   setNewCat({});
-  //   const response1 = fetch("/api/postCat", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(newCat),
-  //   });
-
-  //   setNewCat({
-  //     cateory: "",
-  //     budget: "1000",
-  //     userEmail: "vatsal4011@gmail.com",
-  //   });
-  // }
   return (
     <div className=" max-w-5xl mx-auto flex flex-col py-12 px-6 md:gap-6 gap-3">
       <div className="mb-8">
