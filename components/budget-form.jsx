@@ -106,7 +106,7 @@ function BudgetForm(props) {
             <option value="EMI">EMI (Debt Repayement)</option>
           </select>
         </div>
-        {/* stay up */}
+
         <div className="mb-4">
           <label className="block text-gray-500 font-bold mb-2">Category</label>
 
