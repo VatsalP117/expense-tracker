@@ -112,7 +112,6 @@ export default function Dashboard(props) {
     "/api/handletransactions/" + props.userEmail,
     fetcher,
     {
-      refreshInterval: 1000,
       refreshWhenHidden: true,
       revalidateOnFocus: true,
       revalidateIfStale: true,
@@ -127,7 +126,6 @@ export default function Dashboard(props) {
     "/api/categorybudgets/" + props.userEmail,
     fetcher,
     {
-      refreshInterval: 1000,
       refreshWhenHidden: true,
       revalidateOnFocus: true,
       revalidateIfStale: true,
@@ -190,6 +188,7 @@ export default function Dashboard(props) {
           remarks={transaction.remarks}
           id={transaction.id}
           userEmail={props.userEmail}
+          setData={setData}
         />
       );
     });
