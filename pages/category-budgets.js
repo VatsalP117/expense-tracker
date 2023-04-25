@@ -46,12 +46,8 @@ export default function SetBudget({ categoryBudgets }) {
           <p className=" text-gray-300 text-lg md:text-xl">
             Tracking category-wise budget and spending is important as it helps
             in gaining a better understanding of where the money is being spent
-            and how much is being saved. By keeping track of expenses across
-            various categories, one can identify areas where they can cut back
-            on spending and allocate more resources to areas that require more
-            attention. This not only helps in maintaining a balanced financial
-            plan but also helps in achieving long-term financial goals.Check out
-            our guide on how to define monthly budgets for each category here{" "}
+            and how much is being saved. Check out our guide on how to define
+            monthly budgets for each category here{" "}
           </p>
 
           <p className=" text-gray-300 text-lg md:text-xl">

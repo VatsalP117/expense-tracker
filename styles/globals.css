@@ -123,3 +123,10 @@ select {
     min-width: 250px;
   }
 }
+
+.MuiSkeleton-rectangular {
+  width: 100% !important;
+}
+.transactions-skeleton {
+  height: 100vh !important;
+}

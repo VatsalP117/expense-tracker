@@ -15,22 +15,22 @@ import {
 } from "@/components/ui/dialog";
 import Hey from "./hey";
 import useSwr from "swr";
-
+import LoadUI from "../components/skeleton";
 import { format } from "date-fns";
 import Image from "next/legacy/image";
 import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
 import { allCategories } from "../utils/categories";
 import { useRouter } from "next/router";
 import Card from "../components/experiment";
-import prisma from "../utils/prismaClient";
+// import prisma from "../utils/prismaClient";
 export default function Dashboard(props) {
   const user = props.user;
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-  const [categoryBudgets, setCategoryBudgets] = useState(props.categoryBudgets);
+  const [categoryBudgets, setCategoryBudgets] = useState([]);
   const [timeline, setTimeline] = useState("This month");
-  const [data1, setData] = useState(props.data);
+  const [data1, setData] = useState([]);
   const [budgetModal, setBudgetModal] = useState(false);
   const [filteredTransactions, setFilteredTransactions] = useState([]);
   const [categoryExpenses, setCategoryExpenses] = useState([]);
@@ -117,6 +117,8 @@ export default function Dashboard(props) {
       revalidateIfStale: true,
     }
   );
+  const isLoading = !error && !data;
+
   useEffect(() => {
     if (data) {
       setData(data);
@@ -201,6 +203,9 @@ export default function Dashboard(props) {
     const budget = budgetObj ? budgetObj.budget : 1000;
     return { type: category.type, category: category.category, budget: budget };
   });
+  if (isLoading) {
+    return <LoadUI />;
+  }
 
   return (
     <div className="dashboard-page flex flex-col items-center gap-5 pb-10 md:pb-24">
@@ -361,25 +366,25 @@ export async function getServerSideProps({ res, req, resolvedUrl }) {
     };
   }
   const userEmail = user.emailAddresses[0].emailAddress;
-  const data = await prisma.transaction.findMany({
-    where: {
-      userEmail: userEmail,
-    },
-    orderBy: {
-      date: "desc",
-    },
-  });
-  const categoryBudgets = await prisma.catgoryBudgets.findMany({
-    where: {
-      userEmail: userEmail,
-      type: "Expense",
-    },
-  });
+  // const data = await prisma.transaction.findMany({
+  //   where: {
+  //     userEmail: userEmail,
+  //   },
+  //   orderBy: {
+  //     date: "desc",
+  //   },
+  // });
+  // const categoryBudgets = await prisma.catgoryBudgets.findMany({
+  //   where: {
+  //     userEmail: userEmail,
+  //     type: "Expense",
+  //   },
+  // });
   return {
     props: {
       user: JSON.parse(JSON.stringify(user)),
-      data: JSON.parse(JSON.stringify(data)),
-      categoryBudgets: JSON.parse(JSON.stringify(categoryBudgets)),
+      // data: JSON.parse(JSON.stringify(data)),
+      // categoryBudgets: JSON.parse(JSON.stringify(categoryBudgets)),
       userEmail,
     },
   };
