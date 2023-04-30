@@ -12,7 +12,7 @@ export default function LoadUI() {
         height={55}
         sx={{ bgcolor: "#23252b" }}
       />
-      <h1 className="text-blue-500 text-4xl md:text-6xl font-bold sm:text-center md:text-left">
+      <h1 className="text-blue-500 text-4xl md:text-6xl font-bold text-left">
         Overview
       </h1>
 
@@ -24,7 +24,7 @@ export default function LoadUI() {
         className="transactions-skeleton flex-grow"
       />
 
-      <h1 className="text-blue-500 text-4xl md:text-6xl font-bold sm:text-center md:text-left">
+      <h1 className="text-blue-500 text-4xl md:text-6xl font-bold text-left">
         Budget Constraints
       </h1>
       <Skeleton
