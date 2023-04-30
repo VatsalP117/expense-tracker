@@ -12,21 +12,21 @@ export default function LoadUI() {
         height={55}
         sx={{ bgcolor: "#23252b" }}
       />
+      <h1 className="text-blue-500 text-4xl md:text-6xl font-bold sm:text-center md:text-left">
+        Overview
+      </h1>
 
       <Skeleton
-        variant="text"
-        width={160}
-        height={60}
-        className=" -mt-4"
+        variant="rectangular"
+        width={210}
+        height={70}
         sx={{ bgcolor: "#23252b" }}
+        className="transactions-skeleton flex-grow"
       />
-      <Skeleton
-        variant="text"
-        width={220}
-        height={80}
-        className=" mr-auto md:ml-10"
-        sx={{ bgcolor: "#23252b" }}
-      />
+
+      <h1 className="text-blue-500 text-4xl md:text-6xl font-bold sm:text-center md:text-left">
+        Budget Constraints
+      </h1>
       <Skeleton
         variant="rectangular"
         width={210}
