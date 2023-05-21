@@ -5,22 +5,28 @@ import createEmotionCache from "../utility/createEmotionCache";
 import { StyledEngineProvider } from "@mui/material/styles";
 import NextNProgress from "nextjs-progressbar";
 import "../styles/globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
+import { SessionProvider } from "next-auth/react";
+
 const clientSideEmotionCache = createEmotionCache();
 
 const MyApp = (props) => {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const {
+    Component,
+    emotionCache = clientSideEmotionCache,
+    pageProps,
+    session,
+  } = props;
   const cache = createCache({
     key: "css",
     prepend: true,
   });
   return (
-    <ClerkProvider {...pageProps}>
+    <SessionProvider session={session}>
       <NextNProgress height={4} />
       <CacheProvider value={cache}>
         <Component {...pageProps} />
       </CacheProvider>
-    </ClerkProvider>
+    </SessionProvider>
   );
 };
 

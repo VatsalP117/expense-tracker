@@ -119,9 +119,9 @@ function BudgetForm(props) {
           </select>
         </div>
         <div className="mb-4">
-          <label className="block text-gray-500 font-bold mb-2">
+          {/* <label className="block text-gray-500 font-bold mb-2">
             Current Budget: $1000
-          </label>
+          </label> */}
           <input
             className="appearance-none bg-gray-700 rounded w-full py-2 px-3 text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
             id="newBudget"

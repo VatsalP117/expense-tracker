@@ -7,14 +7,18 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "next/link";
 import { Fade } from "@mui/material";
 import { Slide, SlideProps } from "@mui/material";
-
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 import {
   Dialog,
   DialogContent,
@@ -29,9 +33,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { UserButton } from "@clerk/clerk-react";
-function ResponsiveAppBar(props) {
-  const user = props.user;
+
+function ResponsiveAppBar({ userImg }) {
+  // const user = props.user;
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -68,21 +72,6 @@ function ResponsiveAppBar(props) {
   const handleModalClose = () => {
     setModalOpen(false);
   };
-  // const Transition = React.forwardRef<HTMLDivElement, SlideProps>(
-  //   function Transition(props, ref) {
-  //     return <Slide direction="right" ref={ref} {...props} />;
-  //   }
-  // );
-
-  const [newTimeline, setNewTimeline] = React.useState<string>("This week");
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setModalOpen(false);
-    props.setTimeline(newTimeline);
-  };
-  const handleChange = (event) => {
-    setNewTimeline(event.target.value);
-  };
 
   return (
     <AppBar position="static" className="my-bg-lighter">
@@ -95,29 +84,6 @@ function ResponsiveAppBar(props) {
           <div>
             {/* This action cannot be undone. This will permanently delete your
               account and remove your data from our servers. */}
-            <form
-              className=" p-8 rounded-lg shadow-lg flex flex-col items-start justify-start w-xl gap-3 text-lg bg-slate-800"
-              onSubmit={handleSubmit}
-            >
-              <select
-                onChange={handleChange}
-                name="type"
-                value={newTimeline}
-                className="my-select"
-              >
-                <option value="This week">This week</option>
-                <option value="This month">This month</option>
-                <option value="Last month">Last month</option>
-                <option value="This year">This year</option>
-                <option value="Alltime">Alltime</option>
-              </select>
-              <button
-                type="submit"
-                className="bg-blue-600 shadow-xl hover:bg-blue-500 text-white font-bold rounded-2xl p-3 w-42 text-base"
-              >
-                Submit
-              </button>
-            </form>
           </div>
         </DialogContent>
       </Dialog>
@@ -207,20 +173,22 @@ function ResponsiveAppBar(props) {
 
           <Box
             sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
-            className="md:flex md:flex-row md:gap-4"
+            className="md:flex md:flex-row md:gap-4 lg:gap-8 md:text-base lg:text-lg"
           >
             <Link href="/dashboard" className="mr-4">
               Dashboard
             </Link>
             <Link href="/addTransaction">Add Transaction</Link>
-            {/* <p>Change Timeline</p> */}
-            {/* <button onClick={handleModalOpen}>Set Budget</button> */}
+
             <Link href="/category-budgets">Set Budget</Link>
             <Link href="/hey">Analytics</Link>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <UserButton />
+            <Avatar>
+              <AvatarImage src={userImg} alt="user" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
           </Box>
         </Toolbar>
       </Container>

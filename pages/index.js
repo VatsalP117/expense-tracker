@@ -10,6 +10,8 @@ import Footer from "../components/Footer";
 import TestimonialCard from "../components/testimonial";
 import Hey from "./hey";
 import { useRouter } from "next/router";
+
+import { useEffect } from "react";
 const inter = Inter({ subsets: ["latin"] });
 const testimonials = [
   {
@@ -46,6 +48,8 @@ const testimonialData = testimonials.map((testimonial) => {
   );
 });
 export default function Home() {
+  const router = useRouter();
+
   return (
     <div className="flex max-w-6xl mx-auto flex-col items-center justify-center py-4 min-h-screen">
       <Head>
@@ -75,8 +79,8 @@ export default function Home() {
         </div>
 
         <Link
+          href="/login"
           className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-full shadow-lg mt-4 md:mt-6 md:text-lg"
-          href="/dashboard"
         >
           Get Started
         </Link>

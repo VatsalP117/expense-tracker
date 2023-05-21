@@ -18,23 +18,35 @@ import useSwr from "swr";
 import LoadUI from "../components/skeleton";
 import { format } from "date-fns";
 import Image from "next/legacy/image";
-import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
+// import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
 import { allCategories } from "../utils/categories";
 import { useRouter } from "next/router";
 import Card from "../components/experiment";
-// import prisma from "../utils/prismaClient";
+import { useSession, signIn, signOut } from "next-auth/react";
+
 export default function Dashboard(props) {
-  const user = props.user;
+  // const user = props.user;
+  const {
+    data: session,
+    error: userError,
+    loading: userLoading,
+  } = useSession({ required: true });
+  // console.log(session);
+  const router = useRouter();
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
-
+  const [userEmail, setUserEmail] = useState(null);
   const [categoryBudgets, setCategoryBudgets] = useState([]);
   const [timeline, setTimeline] = useState("This month");
   const [data1, setData] = useState([]);
   const [budgetModal, setBudgetModal] = useState(false);
   const [filteredTransactions, setFilteredTransactions] = useState([]);
   const [categoryExpenses, setCategoryExpenses] = useState([]);
-
+  useEffect(() => {
+    if (session) {
+      setUserEmail(session.user.email);
+    }
+  }, [session]);
   const [pages, setPages] = useState([
     "January 2020",
     "February 2020",
@@ -109,7 +121,7 @@ export default function Dashboard(props) {
   const [currentPage, setCurrentPage] = useState(index);
 
   const { data, error } = useSwr(
-    "/api/handletransactions/" + props.userEmail,
+    "/api/handletransactions/" + userEmail,
     fetcher,
     {
       refreshWhenHidden: true,
@@ -125,7 +137,7 @@ export default function Dashboard(props) {
     }
   }, [data]);
   const { data: categorySWR, error: catError } = useSwr(
-    "/api/categorybudgets/" + props.userEmail,
+    "/api/categorybudgets/" + userEmail,
     fetcher,
     {
       refreshWhenHidden: true,
@@ -162,7 +174,7 @@ export default function Dashboard(props) {
     setCategoryExpenses(categoryData);
   }
   useEffect(handleData, [currentPage, data1]);
-
+  console.log(userEmail);
   let overviewData = filteredTransactions.reduce(
     (acc, currentVal) => {
       acc[currentVal.type] += currentVal.amount;
@@ -189,7 +201,7 @@ export default function Dashboard(props) {
           amount={transaction.amount}
           remarks={transaction.remarks}
           id={transaction.id}
-          userEmail={props.userEmail}
+          userEmail={userEmail}
           setData={setData}
         />
       );
@@ -203,13 +215,14 @@ export default function Dashboard(props) {
     const budget = budgetObj ? budgetObj.budget : 1000;
     return { type: category.type, category: category.category, budget: budget };
   });
-  if (isLoading) {
+
+  if (isLoading || userLoading) {
     return <LoadUI />;
   }
 
   return (
     <div className="dashboard-page flex flex-col items-center gap-5 pb-10 md:pb-24">
-      <ResponsiveAppBar setTimeline={setTimeline} user={user} />
+      <ResponsiveAppBar userImg={session.user.image} />
       <div className="max-w-screen-xl mx-auto mt-5 px-4 text-gray-600 md:px-4">
         <div className="flex items-center justify-between text-sm text-gray-600 font-medium gap-4">
           <Image
@@ -235,22 +248,19 @@ export default function Dashboard(props) {
       </div>
       <main className="dashboard-content py-6 px-7 max-w-6xl w-full  flex flex-col items-start lg:px-12 gap-6 md:gap-8 ">
         <div className="dashboard-heading flex flex-col gap-2 items-start justify-start">
-          <h1 className="text-blue-500 text-4xl md:text-6xl font-bold sm:text-center md:text-left">
+          <h1 className="text-white text-4xl md:text-6xl font-bold sm:text-center md:text-left">
             Overview
           </h1>
 
           <div className="bg-[#17181c] flex flex-col md:flex-row items-center justify-center mt-2 md:mt-6">
-            <div className="grid grid-cols-3 gap-6 md:gap-12 max-w-screen-md lg:flex lg:flex-row lg:gap-12">
+            <div className="grid grid-cols-3 gap-6 md:gap-12 w-full lg:flex lg:flex-row lg:gap-12">
+              <Card title="Expenses" amount={-overviewData.Expense || 0} />
               <Card
-                title="Total Expenses"
-                amount={-overviewData.Expense || 0}
-              />
-              <Card
-                title="Total Investments"
+                title="Investments"
                 amount={-overviewData.Investment || 0}
               />
-              <Card title="Total Income" amount={overviewData.Income || 0} />
-              <Card title="Total EMI" amount={-overviewData.EMI || 0} />
+              <Card title="Income" amount={overviewData.Income || 0} />
+              <Card title="EMI" amount={-overviewData.EMI || 0} />
 
               <Card
                 title="Net In/Out"
@@ -280,7 +290,7 @@ export default function Dashboard(props) {
       </main>
       <main className="budget-constraint max-w-6xl w-full flex flex-col items-start justify-start gap-6 md:gap-8 px-6 lg:px-12">
         <div className="dashboard-heading flex flex-col gap-2 items-start justify-start ">
-          <h1 className="text-blue-500 text-4xl md:text-6xl font-bold sm:text-center md:text-left">
+          <h1 className="text-white text-4xl md:text-6xl font-bold sm:text-center md:text-left">
             Budget Constraints
           </h1>
 
@@ -350,42 +360,42 @@ export default function Dashboard(props) {
   );
 }
 
-export async function getServerSideProps({ res, req, resolvedUrl }) {
-  res.setHeader("Cache-Control", "no-store");
-  const { userId } = getAuth(req);
+// export async function getServerSideProps({ res, req, resolvedUrl }) {
+//   res.setHeader("Cache-Control", "no-store");
+//   const { userId } = getAuth(req);
 
-  const user = userId ? await clerkClient.users.getUser(userId) : undefined;
+//   const user = userId ? await clerkClient.users.getUser(userId) : undefined;
 
-  if (!user) {
-    return {
-      redirect: {
-        destination: "/sign-in?redirect_url=" + resolvedUrl,
+//   if (!user) {
+//     return {
+//       redirect: {
+//         destination: "/sign-in?redirect_url=" + resolvedUrl,
 
-        permanent: false,
-      },
-    };
-  }
-  const userEmail = user.emailAddresses[0].emailAddress;
-  // const data = await prisma.transaction.findMany({
-  //   where: {
-  //     userEmail: userEmail,
-  //   },
-  //   orderBy: {
-  //     date: "desc",
-  //   },
-  // });
-  // const categoryBudgets = await prisma.catgoryBudgets.findMany({
-  //   where: {
-  //     userEmail: userEmail,
-  //     type: "Expense",
-  //   },
-  // });
-  return {
-    props: {
-      user: JSON.parse(JSON.stringify(user)),
-      // data: JSON.parse(JSON.stringify(data)),
-      // categoryBudgets: JSON.parse(JSON.stringify(categoryBudgets)),
-      userEmail,
-    },
-  };
-}
+//         permanent: false,
+//       },
+//     };
+//   }
+//   const userEmail = user.emailAddresses[0].emailAddress;
+//   // const data = await prisma.transaction.findMany({
+//   //   where: {
+//   //     userEmail: userEmail,
+//   //   },
+//   //   orderBy: {
+//   //     date: "desc",
+//   //   },
+//   // });
+//   // const categoryBudgets = await prisma.catgoryBudgets.findMany({
+//   //   where: {
+//   //     userEmail: userEmail,
+//   //     type: "Expense",
+//   //   },
+//   // });
+//   return {
+//     props: {
+//       user: JSON.parse(JSON.stringify(user)),
+//       // data: JSON.parse(JSON.stringify(data)),
+//       // categoryBudgets: JSON.parse(JSON.stringify(categoryBudgets)),
+//       userEmail,
+//     },
+//   };
+// }
