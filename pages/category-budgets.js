@@ -17,7 +17,7 @@ import { useSession } from "next-auth/react";
 import LoadUI from "../components/skeleton";
 import { useRouter } from "next/router";
 export default function SetBudget({ categoryBudgets }) {
-  const { data: session } = useSession();
+  const { data: session, error } = useSession();
   const router = useRouter();
   function handleChange(event) {
     setNewCat((prevFormData) => {
