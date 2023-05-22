@@ -10,7 +10,6 @@ export default async function handler(req, res) {
     });
     res.status(200).json(categoryBudgets);
   } catch (e) {
-    throw new Error("oops");
-    console.log(e);
+    res.status(200).json([]);
   }
 }

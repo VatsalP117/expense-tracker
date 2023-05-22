@@ -16,11 +16,15 @@ import BackButton from "../components/dashboard-button";
 
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import LoadUI from "../components/skeleton";
 
 export default function AddTransaction() {
   const router = useRouter();
-  const { data: session } = useSession({ required: true });
+  const { data: session, error } = useSession();
 
+  if (!session && error) {
+    router.push("/");
+  }
   function handleChange(event) {
     setNewCat((prevFormData) => {
       return {
@@ -29,11 +33,9 @@ export default function AddTransaction() {
       };
     });
   }
-  // if (!session) {
-  //   router.push("/");
-  // }
-  if (!session) {
-    return <h1>Login to continue</h1>;
+
+  if (!session && !error) {
+    return <LoadUI />;
   } else
     return (
       <div className=" max-w-5xl mx-auto flex flex-col py-12 px-6 md:gap-6 gap-3">
@@ -51,7 +53,7 @@ export default function AddTransaction() {
             Add Transaction
           </h1>
         </div>
-        <Form userEmail={session.user.email} />
+        <Form userEmail={session?.user?.email || "abc"} />
       </div>
     );
 }

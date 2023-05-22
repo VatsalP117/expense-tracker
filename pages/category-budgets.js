@@ -14,9 +14,11 @@ import {
 
 import BackButton from "../components/dashboard-button";
 import { useSession } from "next-auth/react";
+import LoadUI from "../components/skeleton";
+import { useRouter } from "next/router";
 export default function SetBudget({ categoryBudgets }) {
-  const { data: session } = useSession({ required: true });
-
+  const { data: session } = useSession();
+  const router = useRouter();
   function handleChange(event) {
     setNewCat((prevFormData) => {
       return {
@@ -25,8 +27,9 @@ export default function SetBudget({ categoryBudgets }) {
       };
     });
   }
-  if (!session) {
-    return <h1>fetching user details</h1>;
+  if (error) router.push("/");
+  if (!session && !error) {
+    return <LoadUI />;
   } else
     return (
       <div className=" max-w-5xl mx-auto flex flex-col py-12 px-6 md:gap-6 gap-3">
@@ -53,7 +56,7 @@ export default function SetBudget({ categoryBudgets }) {
             </p>
           </div>
         </div>
-        <BudgetForm userEmail={session.user.email} />
+        <BudgetForm userEmail={session?.user?.email || "abc"} />
       </div>
     );
 }

@@ -30,7 +30,7 @@ export default function Dashboard(props) {
     data: session,
     error: userError,
     loading: userLoading,
-  } = useSession({ required: true });
+  } = useSession();
   // console.log(session);
   const router = useRouter();
 
@@ -44,8 +44,10 @@ export default function Dashboard(props) {
   const [categoryExpenses, setCategoryExpenses] = useState([]);
   useEffect(() => {
     if (session) {
-      setUserEmail(session.user.email);
+      setUserEmail(session?.user?.email);
+      // console.log(session.user);
     }
+    if (!session && !userLoading && error) router.push("/login");
   }, [session]);
   const [pages, setPages] = useState([
     "January 2020",
@@ -216,13 +218,13 @@ export default function Dashboard(props) {
     return { type: category.type, category: category.category, budget: budget };
   });
 
-  if (isLoading || userLoading) {
+  if (isLoading || userLoading || !session) {
     return <LoadUI />;
   }
 
   return (
     <div className="dashboard-page flex flex-col items-center gap-5 pb-10 md:pb-24">
-      <ResponsiveAppBar userImg={session.user.image} />
+      <ResponsiveAppBar userImg={session?.user?.image} signOut={signOut} />
       <div className="max-w-screen-xl mx-auto mt-5 px-4 text-gray-600 md:px-4">
         <div className="flex items-center justify-between text-sm text-gray-600 font-medium gap-4">
           <Image
@@ -359,43 +361,3 @@ export default function Dashboard(props) {
     </div>
   );
 }
-
-// export async function getServerSideProps({ res, req, resolvedUrl }) {
-//   res.setHeader("Cache-Control", "no-store");
-//   const { userId } = getAuth(req);
-
-//   const user = userId ? await clerkClient.users.getUser(userId) : undefined;
-
-//   if (!user) {
-//     return {
-//       redirect: {
-//         destination: "/sign-in?redirect_url=" + resolvedUrl,
-
-//         permanent: false,
-//       },
-//     };
-//   }
-//   const userEmail = user.emailAddresses[0].emailAddress;
-//   // const data = await prisma.transaction.findMany({
-//   //   where: {
-//   //     userEmail: userEmail,
-//   //   },
-//   //   orderBy: {
-//   //     date: "desc",
-//   //   },
-//   // });
-//   // const categoryBudgets = await prisma.catgoryBudgets.findMany({
-//   //   where: {
-//   //     userEmail: userEmail,
-//   //     type: "Expense",
-//   //   },
-//   // });
-//   return {
-//     props: {
-//       user: JSON.parse(JSON.stringify(user)),
-//       // data: JSON.parse(JSON.stringify(data)),
-//       // categoryBudgets: JSON.parse(JSON.stringify(categoryBudgets)),
-//       userEmail,
-//     },
-//   };
-// }

@@ -91,7 +91,6 @@ export default function Home() {
           muted
           loop
         />
-        {/* <img src="/landing-page-img.png" className="w-full md:w-1/2 lg:w-2/3" /> */}
       </main>
       <section className="testimonials-page flex flex-col py-4 md:py-7 max-w-full md:gap-8 gap-6 pb-12 px-10">
         <h1 className="text-gray-200 mx-auto md:text-5xl font-bold text-3xl w-3/4 text-center md:max-w-none">

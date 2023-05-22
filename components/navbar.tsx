@@ -8,7 +8,7 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Button from "@mui/material/Button";
+
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "next/link";
@@ -33,9 +33,43 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Cloud,
+  CreditCard,
+  Github,
+  Keyboard,
+  LifeBuoy,
+  LogOut,
+  Mail,
+  MessageSquare,
+  Plus,
+  PlusCircle,
+  Settings,
+  User,
+  UserPlus,
+  Users,
+} from "lucide-react";
 
-function ResponsiveAppBar({ userImg }) {
-  // const user = props.user;
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/router";
+
+function ResponsiveAppBar({ userImg, signOut }) {
+  const router = useRouter();
+  console.log(userImg);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -46,9 +80,8 @@ function ResponsiveAppBar({ userImg }) {
   const [modalOpen, setModalOpen] = React.useState(false);
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
-    console.log("open nav menu triggered");
+
     setModalOpen(false);
-    console.log(modalOpen);
   };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -57,7 +90,6 @@ function ResponsiveAppBar({ userImg }) {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-    console.log("i was clicked");
   };
 
   const handleCloseUserMenu = () => {
@@ -67,7 +99,6 @@ function ResponsiveAppBar({ userImg }) {
     setModalOpen(true);
     setAnchorElNav(null);
     setAnchorElUser(null);
-    console.log(anchorElNav, anchorElUser);
   };
   const handleModalClose = () => {
     setModalOpen(false);
@@ -173,7 +204,7 @@ function ResponsiveAppBar({ userImg }) {
 
           <Box
             sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
-            className="md:flex md:flex-row md:gap-4 lg:gap-8 md:text-base lg:text-lg"
+            className="md:flex md:flex-row md:gap-4 lg:gap-6 md:text-medium lg:text-base font-medium"
           >
             <Link href="/dashboard" className="mr-4">
               Dashboard
@@ -185,10 +216,30 @@ function ResponsiveAppBar({ userImg }) {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Avatar>
-              <AvatarImage src={userImg} alt="user" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar>
+                  <AvatarImage src={userImg} alt="user" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+
+                <DropdownMenuItem>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span
+                    onClick={() => {
+                      router.push("/");
+                      signOut();
+                    }}
+                  >
+                    Log out
+                  </span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </Box>
         </Toolbar>
       </Container>
