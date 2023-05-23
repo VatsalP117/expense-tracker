@@ -227,16 +227,14 @@ function ResponsiveAppBar({ userImg, signOut }) {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
 
-                <DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    router.push("/");
+                    signOut({ callbackUrl: "/" });
+                  }}
+                >
                   <LogOut className="mr-2 h-4 w-4" />
-                  <span
-                    onClick={() => {
-                      router.push("/");
-                      signOut();
-                    }}
-                  >
-                    Log out
-                  </span>
+                  <span>Log out</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

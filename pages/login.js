@@ -66,19 +66,13 @@ export default function LoginPage() {
             </p> */}
           {/* </Button> */}
           <GoogleButton
-            className="w-1/2 font-serif"
+            className="md:w-1/2 w-3/4 font-serif"
             onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
           />
 
-          {/* <Button className="text-md w-1/2 flex flex-row py-2 md:py-4 lg:py-6">
-            <p className="text-sm md:text-base lg:text-base font-serif">
-              {" "}
-              Sign in with Apple
-            </p>
-            {/* <Image src={"/a-logo.png"} width={48} height={48} /> */}
-          <button className="bg-black flex flex-row text-white py-2 px-4 rounded items-center w-1/2">
+          <button className="bg-black flex flex-row text-white py-2 px-4 rounded items-center md:w-1/2 w-3/4">
             <img src="/apple-logo.png" alt="Apple logo" className="mr-auto" />
-            <p className="font-serif flex-grow text-lg">Sign in with Apple</p>
+            <p className="font-serif flex-grow">Sign in with Apple</p>
           </button>
         </div>
       </div>
