@@ -70,10 +70,10 @@ export default function LoginPage() {
             onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
           />
 
-          <button className="bg-black flex flex-row text-white py-2 px-4 rounded items-center md:w-1/2 w-3/4">
+          {/* <button className="bg-black flex flex-row text-white py-2 px-4 rounded items-center md:w-1/2 w-3/4">
             <img src="/apple-logo.png" alt="Apple logo" className="mr-auto" />
             <p className="font-serif flex-grow">Sign in with Apple</p>
-          </button>
+          </button> */}
         </div>
       </div>
     );
