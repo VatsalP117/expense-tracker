@@ -10,7 +10,7 @@ import Footer from "../components/Footer";
 import TestimonialCard from "../components/testimonial";
 import Hey from "./hey";
 import { useRouter } from "next/router";
-
+import { useSession, signIn, signOut } from "next-auth/react";
 import { useEffect } from "react";
 const inter = Inter({ subsets: ["latin"] });
 const testimonials = [
@@ -50,6 +50,7 @@ const testimonialData = testimonials.map((testimonial) => {
 export default function Home() {
   const router = useRouter();
 
+  const { data: session } = useSession();
   return (
     <div className="flex max-w-6xl mx-auto flex-col items-center justify-center py-4 min-h-screen">
       <Head>
@@ -78,12 +79,18 @@ export default function Home() {
           </h2>
         </div>
 
-        <Link
-          href="/login"
+        <button
+          onClick={() => {
+            if (session) {
+              router.push("/dashboard");
+            } else {
+              signIn("google", { callbackUrl: "/dashboard" });
+            }
+          }}
           className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-full shadow-lg mt-4 md:mt-6 md:text-lg"
         >
           Get Started
-        </Link>
+        </button>
         <video
           src="/landing-video-blended.mp4"
           className="w-full md:w-1/2 lg:w-2/3"

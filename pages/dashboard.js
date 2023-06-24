@@ -33,13 +33,10 @@ export default function Dashboard(props) {
   } = useSession();
   // console.log(session);
   const router = useRouter();
-
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const [userEmail, setUserEmail] = useState(null);
   const [categoryBudgets, setCategoryBudgets] = useState([]);
-  const [timeline, setTimeline] = useState("This month");
   const [data1, setData] = useState([]);
-  const [budgetModal, setBudgetModal] = useState(false);
   const [filteredTransactions, setFilteredTransactions] = useState([]);
   const [categoryExpenses, setCategoryExpenses] = useState([]);
   useEffect(() => {
@@ -47,7 +44,9 @@ export default function Dashboard(props) {
       setUserEmail(session?.user?.email);
       // console.log(session.user);
     }
-    if (!session && !userLoading && error) router.push("/login");
+    if (!session && !userLoading && error) {
+      signIn("google", { callbackUrl: "/dashboard" });
+    }
   }, [session]);
   const [pages, setPages] = useState([
     "January 2020",
