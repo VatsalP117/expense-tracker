@@ -8,9 +8,11 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
-    "generate": "drizzle-kit generate:pg"
+    "generate": "drizzle-kit generate:pg",
+    "introspect": "drizzle-kit introspect:mysql"
   },
   "dependencies": {
+    "@cloudflare/next-on-pages": "^1.1.0",
     "@emotion/cache": "^11.10.5",
     "@emotion/react": "^11.10.6",
     "@emotion/server": "^11.10.0",
@@ -31,6 +33,7 @@
     "class-variance-authority": "^0.4.0",
     "clsx": "^1.2.1",
     "date-fns": "^2.29.3",
+    "dotenv": "^16.3.1",
     "drizzle-orm": "^0.27.0",
     "flowbite": "^1.6.4",
     "flowbite-react": "^0.4.2",
