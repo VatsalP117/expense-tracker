@@ -9,4 +9,3 @@ export default NextAuth({
   ],
   secret: process.env.JWT_SECRET,
 });
-export const runtime = "edge";
