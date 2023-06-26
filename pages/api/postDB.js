@@ -1,44 +1,38 @@
-// import prisma from "../../utils/prismaClient";
-
-// export default async function handler(req, res) {
-//   if (req.method === "POST") {
-//     const { amount, category, remarks, userEmail, type, date } = req.body;
-//     const newObject = await prisma.transaction.create({
-//       data: {
-//         type,
-//         amount,
-//         remarks,
-//         userEmail,
-//         category,
-//         date,
-//       },
-//     });
-//     // mutate("/api/handletransactions/vatsal4011@gmail.com");
-//     console.log(newObject);
-//     res.status(200).json(req.body);
-//   } else {
-//     res.status(400).json({ message: "Method not allowed" });
-//   }
-// }
 import { db } from "@/db/db";
 import { transactionDetails, transaction } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { sql } from "drizzle-orm";
-export default async function handler(req, res) {
-  const { amount, category, remarks, userEmail, type, date } = req.body;
-  let defaultDate;
-  if (!date) {
-    defaultDate = new Date();
+export default async function handler(req) {
+  if (req.method !== "POST") {
+    return new Response(null, { status: 404, statusText: "Not Found" });
   }
-  const newObject = await db.insert(transaction).values({
-    type,
-    amount,
-    remarks,
-    userEmail,
-    category,
-    date: defaultDate,
-  });
+  try {
+    const { amount, category, remarks, userEmail, type, date } =
+      await req.json();
+    let newObject;
+    if (date) {
+      newObject = await db.insert(transaction).values({
+        type,
+        amount,
+        remarks,
+        userEmail,
+        category,
+        date,
+      });
+    } else {
+      newObject = await db.insert(transaction).values({
+        type,
+        amount,
+        remarks,
+        userEmail,
+        category,
+      });
+    }
 
-  res.status(200).json(req.body);
+    return new Response(JSON.stringify(newObject), { status: 200 });
+  } catch (e) {
+    console.log(e);
+    return new Response(null, { status: 400, statusText: "Bad Request" });
+  }
 }
 export const runtime = "edge";

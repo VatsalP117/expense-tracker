@@ -3,10 +3,11 @@ import { transactionDetails, transaction } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { sql } from "drizzle-orm";
 
-export default async function handler(req, res) {
+export default async function handler(req) {
   const urlValue = req.nextUrl.pathname;
   const userEmail = urlValue.substring(24, urlValue.length);
-
+  if (req.method !== "GET")
+    return new Response(null, { status: 404, statusText: "Not Found" });
   try {
     const newRes = await db
       .select()
@@ -14,10 +15,10 @@ export default async function handler(req, res) {
       .where(
         sql`${transaction.userEmail}=${userEmail} order by ${transaction.date} desc`
       );
-    res.status(200).json(newRes);
+    return new Response(JSON.stringify(newRes), { status: 200 });
   } catch (e) {
     console.log(e);
-    res.status(500).json([]);
+    return new Response(null, { status: 400, statusText: "Bad Request" });
   }
 }
 export const runtime = "edge";
