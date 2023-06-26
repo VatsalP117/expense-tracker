@@ -27,7 +27,10 @@ export const transaction = mysqlTable("Transaction", {
 });
 
 export const catgoryBudgets = mysqlTable("catgoryBudgets", {
-  id: varchar("id", { length: 191 }).primaryKey().notNull(),
+  id: varchar("id", { length: 191 })
+    .primaryKey()
+    .notNull()
+    .default(sql`(uuid())`),
   category: varchar("category", { length: 191 }).notNull(),
   type: varchar("type", { length: 191 }).notNull(),
   budget: int("budget").default(1000).notNull(),

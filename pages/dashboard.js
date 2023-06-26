@@ -19,7 +19,7 @@ import LoadUI from "../components/skeleton";
 import { format } from "date-fns";
 import Image from "next/legacy/image";
 // import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
-import { allCategories } from "../utils/categories";
+import { allCategories } from "../utility/categories";
 import { useRouter } from "next/router";
 import Card from "../components/experiment";
 import { useSession, signIn, signOut } from "next-auth/react";
@@ -162,7 +162,11 @@ export default function Dashboard(props) {
     setFilteredTransactions(filteredData);
 
     const categoryData = filteredData.reduce((acc, transaction) => {
-      if (transaction.type === "Expense" || transaction.type === "EMI") {
+      if (
+        transaction.type === "Expense" ||
+        transaction.type === "EMI" ||
+        transaction.type == "Investment"
+      ) {
         if (acc[transaction.category]) {
           acc[transaction.category] += transaction.amount;
         } else {
@@ -175,7 +179,7 @@ export default function Dashboard(props) {
     setCategoryExpenses(categoryData);
   }
   useEffect(handleData, [currentPage, data1]);
-  console.log(userEmail);
+
   let overviewData = filteredTransactions.reduce(
     (acc, currentVal) => {
       acc[currentVal.type] += currentVal.amount;

@@ -12,7 +12,6 @@
     "introspect": "drizzle-kit introspect:mysql"
   },
   "dependencies": {
-    "@cloudflare/next-on-pages": "^1.1.0",
     "@emotion/cache": "^11.10.5",
     "@emotion/react": "^11.10.6",
     "@emotion/server": "^11.10.0",
@@ -53,6 +52,7 @@
     "tailwindcss-animate": "^1.0.5"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.1.0",
     "@types/node": "18.14.6",
     "@types/react": "18.0.28",
     "autoprefixer": "^10.4.13",

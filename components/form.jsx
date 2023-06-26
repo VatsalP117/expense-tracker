@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { format } from "date-fns";
 import { useEffect } from "react";
-import { categories } from "../utils/categories";
+import { categories } from "../utility/categories";
 import {
   AlertDialog,
   AlertDialogAction,
