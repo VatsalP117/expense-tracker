@@ -1,28 +1,28 @@
-// import { PrismaClient } from "@prisma/client";
-// const prisma = new PrismaClient();
-import prisma from "../../utils/prismaClient";
-export default async function handler(req, res) {
-  if (req.method === "POST") {
-    const { category, budget, userEmail, type } = req.body;
-    const deletedObject = await prisma.catgoryBudgets.deleteMany({
-      where: {
-        userEmail: userEmail,
-        category: category,
-        type: type,
-      },
+import { db } from "@/db/db";
+import { catgoryBudgets } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import { sql } from "drizzle-orm";
+export default async function handler(req) {
+  if (req.method !== "POST") {
+    return new Response(null, { status: 404, statusText: "Not Found" });
+  }
+  const { category, budget, userEmail, type } = await req.json();
+  try {
+    const oldRecord = await db
+      .delete(catgoryBudgets)
+      .where(
+        sql`${catgoryBudgets.userEmail}=${userEmail} AND ${catgoryBudgets.category}=${category} AND ${catgoryBudgets.type}=${type}`
+      );
+    const newRecord = await db.insert(catgoryBudgets).values({
+      category,
+      type,
+      budget,
+      userEmail,
     });
-    const newObject = await prisma.catgoryBudgets.create({
-      data: {
-        type,
-        category,
-        budget,
-        userEmail,
-      },
-    });
-
-    console.log(newObject);
-    res.status(200).json(req.body);
-  } else {
-    res.status(400).json({ message: "Method not allowed" });
+    return new Response(JSON.stringify(newRecord), { status: 200 });
+  } catch (e) {
+    console.log(e);
+    return new Response(null, { status: 400, statusText: "Bad Request" });
   }
 }
+export const runtime = "edge";

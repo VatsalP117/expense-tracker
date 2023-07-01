@@ -113,3 +113,6 @@ select {
 .transactions-skeleton {
   height: 100vh !important;
 }
+.recharts-pie-label-text {
+  background-color: #fff !important;
+}

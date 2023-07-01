@@ -1,15 +1,25 @@
-import prisma from "../../../utils/prismaClient";
-export default async function handler(req, res) {
+import { db } from "@/db/db";
+import { catgoryBudgets } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import { sql } from "drizzle-orm";
+export default async function handler(req) {
+  if (req.method !== "GET") {
+    return new Response(null, { status: 404, statusText: "Not Found" });
+  }
+  const urlValue = req.nextUrl.pathname;
+  const userEmail = urlValue.substring(21, urlValue.length);
   try {
-    const { userEmail } = req.query;
-    const categoryBudgets = await prisma.catgoryBudgets.findMany({
-      where: {
-        userEmail: userEmail,
-        type: "Expense",
-      },
-    });
-    res.status(200).json(categoryBudgets);
+    const newRes = await db
+      .select()
+      .from(catgoryBudgets)
+      .where(
+        sql`${catgoryBudgets.userEmail}=${userEmail} AND ${catgoryBudgets.type}!="Income"`
+      );
+
+    return new Response(JSON.stringify(newRes), { status: 200 });
   } catch (e) {
-    res.status(200).json([]);
+    console.log(e);
+    return new Response(null, { status: 400, statusText: "Bad Request" });
   }
 }
+export const runtime = "edge";

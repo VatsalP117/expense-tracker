@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { format } from "date-fns";
 import { useEffect } from "react";
-import { categories } from "../utils/categories";
+import { categories } from "../utility/categories";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,7 +27,8 @@ function Form(props) {
     remarks: "",
     userEmail: props.userEmail,
   });
-  const [val, setVal] = useState(new Date().toISOString());
+  // const [val, setVal] = useState(new Date().toISOString());
+  const [val, setVal] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => setCategory(categories[type][0]), [type]);
   const categoriesOptions = categories[type].map((category) => {
@@ -54,7 +55,8 @@ function Form(props) {
     event.preventDefault();
     formData["type"] = type;
     formData["category"] = category;
-    formData["date"] = new Date(val).toISOString();
+
+    formData["date"] = val;
     const response1 = fetch("/api/postDB", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

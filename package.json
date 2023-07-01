@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate",
-    "generate": "drizzle-kit generate:pg"
+    "generate": "drizzle-kit generate:pg",
+    "introspect": "drizzle-kit introspect:mysql"
   },
   "dependencies": {
     "@emotion/cache": "^11.10.5",
@@ -31,11 +31,12 @@
     "class-variance-authority": "^0.4.0",
     "clsx": "^1.2.1",
     "date-fns": "^2.29.3",
+    "dotenv": "^16.3.1",
     "drizzle-orm": "^0.27.0",
     "flowbite": "^1.6.4",
     "flowbite-react": "^0.4.2",
     "lucide-react": "^0.123.0",
-    "next": "^13.2.4",
+    "next": "^13.4.5-canary.2",
     "next-auth": "^4.22.1",
     "nextjs-progressbar": "^0.0.16",
     "postgres": "^3.3.5",
@@ -44,18 +45,18 @@
     "react-dom": "18.2.0",
     "react-google-button": "^0.7.2",
     "react-spinners": "^0.13.8",
-    "sharp": "^0.31.3",
+    "recharts": "^2.7.2",
     "swr": "^2.1.5",
     "tailwind-merge": "^1.10.0",
     "tailwindcss-animate": "^1.0.5"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.1.0",
     "@types/node": "18.14.6",
     "@types/react": "18.0.28",
     "autoprefixer": "^10.4.13",
     "drizzle-kit": "^0.19.2",
     "postcss": "^8.4.21",
-    "prisma": "^4.13.0",
     "tailwindcss": "^3.2.7",
     "typescript": "4.9.5"
   }
