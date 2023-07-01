@@ -18,20 +18,17 @@ import useSwr from "swr";
 import LoadUI from "../components/skeleton";
 import { format } from "date-fns";
 import Image from "next/legacy/image";
-// import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
 import { allCategories } from "../utility/categories";
 import { useRouter } from "next/router";
 import Card from "../components/experiment";
 import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Dashboard(props) {
-  // const user = props.user;
   const {
     data: session,
     error: userError,
     loading: userLoading,
   } = useSession();
-  // console.log(session);
   const router = useRouter();
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const [userEmail, setUserEmail] = useState(null);
@@ -42,7 +39,6 @@ export default function Dashboard(props) {
   useEffect(() => {
     if (session) {
       setUserEmail(session?.user?.email);
-      // console.log(session.user);
     }
     if (!session && !userLoading && error) {
       signIn("google", { callbackUrl: "/dashboard" });
