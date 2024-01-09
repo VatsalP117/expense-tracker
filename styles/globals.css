@@ -7,6 +7,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   /* border: 1px solid red; */
 }
 
@@ -112,7 +113,4 @@ select {
 }
 .transactions-skeleton {
   height: 100vh !important;
-}
-.recharts-pie-label-text {
-  background-color: #fff !important;
 }

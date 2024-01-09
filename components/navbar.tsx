@@ -105,7 +105,7 @@ function ResponsiveAppBar({ userImg, signOut }) {
   };
 
   return (
-    <AppBar position="static" className="my-bg-lighter">
+    <AppBar position="static" className="my-bg-lighter font-sans">
       {/* modal code */}
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
         <DialogContent>

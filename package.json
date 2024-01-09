@@ -45,7 +45,6 @@
     "react-dom": "18.2.0",
     "react-google-button": "^0.7.2",
     "react-spinners": "^0.13.8",
-    "recharts": "^2.7.2",
     "swr": "^2.1.5",
     "tailwind-merge": "^1.10.0",
     "tailwindcss-animate": "^1.0.5"
